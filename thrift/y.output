@@ -1,0 +1,3488 @@
+state 0 //
+
+    0 $accept: . Program
+    5 HeaderList: .  [$end, tok_const, tok_cpp_include, tok_enum, tok_include, tok_lobattr, tok_namespace, tok_senum, tok_service, tok_struct, tok_typedef, tok_union, tok_xception]
+
+    $end             reduce using rule 5 (HeaderList)
+    tok_const        reduce using rule 5 (HeaderList)
+    tok_cpp_include  reduce using rule 5 (HeaderList)
+    tok_enum         reduce using rule 5 (HeaderList)
+    tok_include      reduce using rule 5 (HeaderList)
+    tok_lobattr      reduce using rule 5 (HeaderList)
+    tok_namespace    reduce using rule 5 (HeaderList)
+    tok_senum        reduce using rule 5 (HeaderList)
+    tok_service      reduce using rule 5 (HeaderList)
+    tok_struct       reduce using rule 5 (HeaderList)
+    tok_typedef      reduce using rule 5 (HeaderList)
+    tok_union        reduce using rule 5 (HeaderList)
+    tok_xception     reduce using rule 5 (HeaderList)
+
+    HeaderList  goto state 2
+    Program     goto state 1
+
+state 1 // [$end]
+
+    0 $accept: Program .  [$end]
+
+    $end  accept
+
+state 2 // [$end]
+
+    1 Program: HeaderList . DefinitionList
+    4 HeaderList: HeaderList . DestroyDocText Header
+    3 DestroyDocText: .  [tok_cpp_include, tok_include, tok_namespace]
+   12 DefinitionList: .  [$end, tok_const, tok_enum, tok_lobattr, tok_senum, tok_service, tok_struct, tok_typedef, tok_union, tok_xception]
+
+    $end             reduce using rule 12 (DefinitionList)
+    tok_const        reduce using rule 12 (DefinitionList)
+    tok_cpp_include  reduce using rule 3 (DestroyDocText)
+    tok_enum         reduce using rule 12 (DefinitionList)
+    tok_include      reduce using rule 3 (DestroyDocText)
+    tok_lobattr      reduce using rule 12 (DefinitionList)
+    tok_namespace    reduce using rule 3 (DestroyDocText)
+    tok_senum        reduce using rule 12 (DefinitionList)
+    tok_service      reduce using rule 12 (DefinitionList)
+    tok_struct       reduce using rule 12 (DefinitionList)
+    tok_typedef      reduce using rule 12 (DefinitionList)
+    tok_union        reduce using rule 12 (DefinitionList)
+    tok_xception     reduce using rule 12 (DefinitionList)
+
+    DefinitionList  goto state 3
+    DestroyDocText  goto state 4
+
+state 3 // [$end]
+
+    1 Program: HeaderList DefinitionList .  [$end]
+   11 DefinitionList: DefinitionList . CaptureDocText Definition
+    2 CaptureDocText: .  [tok_const, tok_enum, tok_lobattr, tok_senum, tok_service, tok_struct, tok_typedef, tok_union, tok_xception]
+
+    $end          reduce using rule 1 (Program)
+    tok_const     reduce using rule 2 (CaptureDocText)
+    tok_enum      reduce using rule 2 (CaptureDocText)
+    tok_lobattr   reduce using rule 2 (CaptureDocText)
+    tok_senum     reduce using rule 2 (CaptureDocText)
+    tok_service   reduce using rule 2 (CaptureDocText)
+    tok_struct    reduce using rule 2 (CaptureDocText)
+    tok_typedef   reduce using rule 2 (CaptureDocText)
+    tok_union     reduce using rule 2 (CaptureDocText)
+    tok_xception  reduce using rule 2 (CaptureDocText)
+
+    CaptureDocText  goto state 30
+
+state 4 // [tok_cpp_include]
+
+    4 HeaderList: HeaderList DestroyDocText . Header
+
+    tok_cpp_include  shift, and goto state 8
+    tok_include      shift, and goto state 9
+    tok_namespace    shift, and goto state 7
+
+    Header   goto state 5
+    Include  goto state 6
+
+state 5 // tok_cpp_include tok_literal [$end]
+
+    4 HeaderList: HeaderList DestroyDocText Header .  [$end, tok_const, tok_cpp_include, tok_enum, tok_include, tok_lobattr, tok_namespace, tok_senum, tok_service, tok_struct, tok_typedef, tok_union, tok_xception]
+
+    $end             reduce using rule 4 (HeaderList)
+    tok_const        reduce using rule 4 (HeaderList)
+    tok_cpp_include  reduce using rule 4 (HeaderList)
+    tok_enum         reduce using rule 4 (HeaderList)
+    tok_include      reduce using rule 4 (HeaderList)
+    tok_lobattr      reduce using rule 4 (HeaderList)
+    tok_namespace    reduce using rule 4 (HeaderList)
+    tok_senum        reduce using rule 4 (HeaderList)
+    tok_service      reduce using rule 4 (HeaderList)
+    tok_struct       reduce using rule 4 (HeaderList)
+    tok_typedef      reduce using rule 4 (HeaderList)
+    tok_union        reduce using rule 4 (HeaderList)
+    tok_xception     reduce using rule 4 (HeaderList)
+
+state 6 // tok_include tok_literal [$end]
+
+    6 Header: Include .  [$end, tok_const, tok_cpp_include, tok_enum, tok_include, tok_lobattr, tok_namespace, tok_senum, tok_service, tok_struct, tok_typedef, tok_union, tok_xception]
+
+    $end             reduce using rule 6 (Header)
+    tok_const        reduce using rule 6 (Header)
+    tok_cpp_include  reduce using rule 6 (Header)
+    tok_enum         reduce using rule 6 (Header)
+    tok_include      reduce using rule 6 (Header)
+    tok_lobattr      reduce using rule 6 (Header)
+    tok_namespace    reduce using rule 6 (Header)
+    tok_senum        reduce using rule 6 (Header)
+    tok_service      reduce using rule 6 (Header)
+    tok_struct       reduce using rule 6 (Header)
+    tok_typedef      reduce using rule 6 (Header)
+    tok_union        reduce using rule 6 (Header)
+    tok_xception     reduce using rule 6 (Header)
+
+state 7 // tok_namespace
+
+    7 Header: tok_namespace . tok_identifier tok_identifier TypeAnnotations
+    8 Header: tok_namespace . '*' tok_identifier
+
+    '*'             shift, and goto state 13
+    tok_identifier  shift, and goto state 12
+
+state 8 // tok_cpp_include
+
+    9 Header: tok_cpp_include . tok_literal
+
+    tok_literal  shift, and goto state 11
+
+state 9 // tok_include
+
+   10 Include: tok_include . tok_literal
+
+    tok_literal  shift, and goto state 10
+
+state 10 // tok_include tok_literal
+
+   10 Include: tok_include tok_literal .  [$end, tok_const, tok_cpp_include, tok_enum, tok_include, tok_lobattr, tok_namespace, tok_senum, tok_service, tok_struct, tok_typedef, tok_union, tok_xception]
+
+    $end             reduce using rule 10 (Include)
+    tok_const        reduce using rule 10 (Include)
+    tok_cpp_include  reduce using rule 10 (Include)
+    tok_enum         reduce using rule 10 (Include)
+    tok_include      reduce using rule 10 (Include)
+    tok_lobattr      reduce using rule 10 (Include)
+    tok_namespace    reduce using rule 10 (Include)
+    tok_senum        reduce using rule 10 (Include)
+    tok_service      reduce using rule 10 (Include)
+    tok_struct       reduce using rule 10 (Include)
+    tok_typedef      reduce using rule 10 (Include)
+    tok_union        reduce using rule 10 (Include)
+    tok_xception     reduce using rule 10 (Include)
+
+state 11 // tok_cpp_include tok_literal
+
+    9 Header: tok_cpp_include tok_literal .  [$end, tok_const, tok_cpp_include, tok_enum, tok_include, tok_lobattr, tok_namespace, tok_senum, tok_service, tok_struct, tok_typedef, tok_union, tok_xception]
+
+    $end             reduce using rule 9 (Header)
+    tok_const        reduce using rule 9 (Header)
+    tok_cpp_include  reduce using rule 9 (Header)
+    tok_enum         reduce using rule 9 (Header)
+    tok_include      reduce using rule 9 (Header)
+    tok_lobattr      reduce using rule 9 (Header)
+    tok_namespace    reduce using rule 9 (Header)
+    tok_senum        reduce using rule 9 (Header)
+    tok_service      reduce using rule 9 (Header)
+    tok_struct       reduce using rule 9 (Header)
+    tok_typedef      reduce using rule 9 (Header)
+    tok_union        reduce using rule 9 (Header)
+    tok_xception     reduce using rule 9 (Header)
+
+state 12 // tok_namespace tok_identifier
+
+    7 Header: tok_namespace tok_identifier . tok_identifier TypeAnnotations
+
+    tok_identifier  shift, and goto state 15
+
+state 13 // tok_namespace '*'
+
+    8 Header: tok_namespace '*' . tok_identifier
+
+    tok_identifier  shift, and goto state 14
+
+state 14 // tok_namespace '*' tok_identifier
+
+    8 Header: tok_namespace '*' tok_identifier .  [$end, tok_const, tok_cpp_include, tok_enum, tok_include, tok_lobattr, tok_namespace, tok_senum, tok_service, tok_struct, tok_typedef, tok_union, tok_xception]
+
+    $end             reduce using rule 8 (Header)
+    tok_const        reduce using rule 8 (Header)
+    tok_cpp_include  reduce using rule 8 (Header)
+    tok_enum         reduce using rule 8 (Header)
+    tok_include      reduce using rule 8 (Header)
+    tok_lobattr      reduce using rule 8 (Header)
+    tok_namespace    reduce using rule 8 (Header)
+    tok_senum        reduce using rule 8 (Header)
+    tok_service      reduce using rule 8 (Header)
+    tok_struct       reduce using rule 8 (Header)
+    tok_typedef      reduce using rule 8 (Header)
+    tok_union        reduce using rule 8 (Header)
+    tok_xception     reduce using rule 8 (Header)
+
+state 15 // tok_namespace tok_identifier tok_identifier
+
+    7 Header: tok_namespace tok_identifier tok_identifier . TypeAnnotations
+  109 TypeAnnotations: .  [$end, tok_const, tok_cpp_include, tok_enum, tok_include, tok_lobattr, tok_namespace, tok_senum, tok_service, tok_struct, tok_typedef, tok_union, tok_xception]
+
+    $end             reduce using rule 109 (TypeAnnotations)
+    '('              shift, and goto state 17
+    tok_const        reduce using rule 109 (TypeAnnotations)
+    tok_cpp_include  reduce using rule 109 (TypeAnnotations)
+    tok_enum         reduce using rule 109 (TypeAnnotations)
+    tok_include      reduce using rule 109 (TypeAnnotations)
+    tok_lobattr      reduce using rule 109 (TypeAnnotations)
+    tok_namespace    reduce using rule 109 (TypeAnnotations)
+    tok_senum        reduce using rule 109 (TypeAnnotations)
+    tok_service      reduce using rule 109 (TypeAnnotations)
+    tok_struct       reduce using rule 109 (TypeAnnotations)
+    tok_typedef      reduce using rule 109 (TypeAnnotations)
+    tok_union        reduce using rule 109 (TypeAnnotations)
+    tok_xception     reduce using rule 109 (TypeAnnotations)
+
+    TypeAnnotations  goto state 16
+
+state 16 // tok_namespace tok_identifier tok_identifier [$end]
+
+    7 Header: tok_namespace tok_identifier tok_identifier TypeAnnotations .  [$end, tok_const, tok_cpp_include, tok_enum, tok_include, tok_lobattr, tok_namespace, tok_senum, tok_service, tok_struct, tok_typedef, tok_union, tok_xception]
+
+    $end             reduce using rule 7 (Header)
+    tok_const        reduce using rule 7 (Header)
+    tok_cpp_include  reduce using rule 7 (Header)
+    tok_enum         reduce using rule 7 (Header)
+    tok_include      reduce using rule 7 (Header)
+    tok_lobattr      reduce using rule 7 (Header)
+    tok_namespace    reduce using rule 7 (Header)
+    tok_senum        reduce using rule 7 (Header)
+    tok_service      reduce using rule 7 (Header)
+    tok_struct       reduce using rule 7 (Header)
+    tok_typedef      reduce using rule 7 (Header)
+    tok_union        reduce using rule 7 (Header)
+    tok_xception     reduce using rule 7 (Header)
+
+state 17 // tok_typedef tok_binary '('
+
+  108 TypeAnnotations: '(' . TypeAnnotationList ')'
+  111 TypeAnnotationList: .  [')', tok_identifier]
+
+    ')'             reduce using rule 111 (TypeAnnotationList)
+    tok_identifier  reduce using rule 111 (TypeAnnotationList)
+
+    TypeAnnotationList  goto state 18
+
+state 18 // tok_typedef tok_binary '(' [')']
+
+  108 TypeAnnotations: '(' TypeAnnotationList . ')'
+  110 TypeAnnotationList: TypeAnnotationList . TypeAnnotation
+
+    ')'             shift, and goto state 19
+    tok_identifier  shift, and goto state 21
+
+    TypeAnnotation  goto state 20
+
+state 19 // tok_typedef tok_binary '(' ')'
+
+  108 TypeAnnotations: '(' TypeAnnotationList ')' .  [$end, ')', ',', ';', '>', '}', tok_binary, tok_bool, tok_const, tok_cpp_include, tok_double, tok_enum, tok_fieldcomment, tok_i16, tok_i32, tok_i64, tok_i8, tok_identifier, tok_include, tok_int_constant, tok_list, tok_lobattr, tok_map, tok_namespace, tok_oneway, tok_optional, tok_reference, tok_required, tok_senum, tok_service, tok_set, tok_slist, tok_string, tok_struct, tok_typedef, tok_union, tok_void, tok_xception]
+
+    $end              reduce using rule 108 (TypeAnnotations)
+    ')'               reduce using rule 108 (TypeAnnotations)
+    ','               reduce using rule 108 (TypeAnnotations)
+    ';'               reduce using rule 108 (TypeAnnotations)
+    '>'               reduce using rule 108 (TypeAnnotations)
+    '}'               reduce using rule 108 (TypeAnnotations)
+    tok_binary        reduce using rule 108 (TypeAnnotations)
+    tok_bool          reduce using rule 108 (TypeAnnotations)
+    tok_const         reduce using rule 108 (TypeAnnotations)
+    tok_cpp_include   reduce using rule 108 (TypeAnnotations)
+    tok_double        reduce using rule 108 (TypeAnnotations)
+    tok_enum          reduce using rule 108 (TypeAnnotations)
+    tok_fieldcomment  reduce using rule 108 (TypeAnnotations)
+    tok_i16           reduce using rule 108 (TypeAnnotations)
+    tok_i32           reduce using rule 108 (TypeAnnotations)
+    tok_i64           reduce using rule 108 (TypeAnnotations)
+    tok_i8            reduce using rule 108 (TypeAnnotations)
+    tok_identifier    reduce using rule 108 (TypeAnnotations)
+    tok_include       reduce using rule 108 (TypeAnnotations)
+    tok_int_constant  reduce using rule 108 (TypeAnnotations)
+    tok_list          reduce using rule 108 (TypeAnnotations)
+    tok_lobattr       reduce using rule 108 (TypeAnnotations)
+    tok_map           reduce using rule 108 (TypeAnnotations)
+    tok_namespace     reduce using rule 108 (TypeAnnotations)
+    tok_oneway        reduce using rule 108 (TypeAnnotations)
+    tok_optional      reduce using rule 108 (TypeAnnotations)
+    tok_reference     reduce using rule 108 (TypeAnnotations)
+    tok_required      reduce using rule 108 (TypeAnnotations)
+    tok_senum         reduce using rule 108 (TypeAnnotations)
+    tok_service       reduce using rule 108 (TypeAnnotations)
+    tok_set           reduce using rule 108 (TypeAnnotations)
+    tok_slist         reduce using rule 108 (TypeAnnotations)
+    tok_string        reduce using rule 108 (TypeAnnotations)
+    tok_struct        reduce using rule 108 (TypeAnnotations)
+    tok_typedef       reduce using rule 108 (TypeAnnotations)
+    tok_union         reduce using rule 108 (TypeAnnotations)
+    tok_void          reduce using rule 108 (TypeAnnotations)
+    tok_xception      reduce using rule 108 (TypeAnnotations)
+
+state 20 // tok_typedef tok_binary '(' tok_identifier [')']
+
+  110 TypeAnnotationList: TypeAnnotationList TypeAnnotation .  [')', tok_identifier]
+
+    ')'             reduce using rule 110 (TypeAnnotationList)
+    tok_identifier  reduce using rule 110 (TypeAnnotationList)
+
+state 21 // tok_typedef tok_binary '(' tok_identifier
+
+  112 TypeAnnotation: tok_identifier . TypeAnnotationValue CommaOrSemicolonOptional FieldComment
+  114 TypeAnnotationValue: .  [')', ',', ';', tok_fieldcomment, tok_identifier]
+
+    ')'               reduce using rule 114 (TypeAnnotationValue)
+    ','               reduce using rule 114 (TypeAnnotationValue)
+    ';'               reduce using rule 114 (TypeAnnotationValue)
+    '='               shift, and goto state 23
+    tok_fieldcomment  reduce using rule 114 (TypeAnnotationValue)
+    tok_identifier    reduce using rule 114 (TypeAnnotationValue)
+
+    TypeAnnotationValue  goto state 22
+
+state 22 // tok_typedef tok_binary '(' tok_identifier [')']
+
+  112 TypeAnnotation: tok_identifier TypeAnnotationValue . CommaOrSemicolonOptional FieldComment
+   23 CommaOrSemicolonOptional: .  [')', tok_fieldcomment, tok_identifier]
+
+    ')'               reduce using rule 23 (CommaOrSemicolonOptional)
+    ','               shift, and goto state 25
+    ';'               shift, and goto state 26
+    tok_fieldcomment  reduce using rule 23 (CommaOrSemicolonOptional)
+    tok_identifier    reduce using rule 23 (CommaOrSemicolonOptional)
+
+    CommaOrSemicolonOptional  goto state 27
+
+state 23 // tok_typedef tok_binary '(' tok_identifier '='
+
+  113 TypeAnnotationValue: '=' . tok_literal
+
+    tok_literal  shift, and goto state 24
+
+state 24 // tok_typedef tok_binary '(' tok_identifier '=' tok_literal
+
+  113 TypeAnnotationValue: '=' tok_literal .  [')', ',', ';', tok_fieldcomment, tok_identifier]
+
+    ')'               reduce using rule 113 (TypeAnnotationValue)
+    ','               reduce using rule 113 (TypeAnnotationValue)
+    ';'               reduce using rule 113 (TypeAnnotationValue)
+    tok_fieldcomment  reduce using rule 113 (TypeAnnotationValue)
+    tok_identifier    reduce using rule 113 (TypeAnnotationValue)
+
+state 25 // tok_typedef tok_binary tok_identifier ','
+
+   21 CommaOrSemicolonOptional: ',' .  [$end, ')', '[', ']', '{', '}', tok_binary, tok_bool, tok_const, tok_double, tok_dub_constant, tok_enum, tok_fieldcomment, tok_i16, tok_i32, tok_i64, tok_i8, tok_identifier, tok_int_constant, tok_list, tok_literal, tok_lobattr, tok_map, tok_oneway, tok_optional, tok_required, tok_senum, tok_service, tok_set, tok_slist, tok_string, tok_struct, tok_typedef, tok_union, tok_void, tok_xception]
+
+    $end              reduce using rule 21 (CommaOrSemicolonOptional)
+    ')'               reduce using rule 21 (CommaOrSemicolonOptional)
+    '['               reduce using rule 21 (CommaOrSemicolonOptional)
+    ']'               reduce using rule 21 (CommaOrSemicolonOptional)
+    '{'               reduce using rule 21 (CommaOrSemicolonOptional)
+    '}'               reduce using rule 21 (CommaOrSemicolonOptional)
+    tok_binary        reduce using rule 21 (CommaOrSemicolonOptional)
+    tok_bool          reduce using rule 21 (CommaOrSemicolonOptional)
+    tok_const         reduce using rule 21 (CommaOrSemicolonOptional)
+    tok_double        reduce using rule 21 (CommaOrSemicolonOptional)
+    tok_dub_constant  reduce using rule 21 (CommaOrSemicolonOptional)
+    tok_enum          reduce using rule 21 (CommaOrSemicolonOptional)
+    tok_fieldcomment  reduce using rule 21 (CommaOrSemicolonOptional)
+    tok_i16           reduce using rule 21 (CommaOrSemicolonOptional)
+    tok_i32           reduce using rule 21 (CommaOrSemicolonOptional)
+    tok_i64           reduce using rule 21 (CommaOrSemicolonOptional)
+    tok_i8            reduce using rule 21 (CommaOrSemicolonOptional)
+    tok_identifier    reduce using rule 21 (CommaOrSemicolonOptional)
+    tok_int_constant  reduce using rule 21 (CommaOrSemicolonOptional)
+    tok_list          reduce using rule 21 (CommaOrSemicolonOptional)
+    tok_literal       reduce using rule 21 (CommaOrSemicolonOptional)
+    tok_lobattr       reduce using rule 21 (CommaOrSemicolonOptional)
+    tok_map           reduce using rule 21 (CommaOrSemicolonOptional)
+    tok_oneway        reduce using rule 21 (CommaOrSemicolonOptional)
+    tok_optional      reduce using rule 21 (CommaOrSemicolonOptional)
+    tok_required      reduce using rule 21 (CommaOrSemicolonOptional)
+    tok_senum         reduce using rule 21 (CommaOrSemicolonOptional)
+    tok_service       reduce using rule 21 (CommaOrSemicolonOptional)
+    tok_set           reduce using rule 21 (CommaOrSemicolonOptional)
+    tok_slist         reduce using rule 21 (CommaOrSemicolonOptional)
+    tok_string        reduce using rule 21 (CommaOrSemicolonOptional)
+    tok_struct        reduce using rule 21 (CommaOrSemicolonOptional)
+    tok_typedef       reduce using rule 21 (CommaOrSemicolonOptional)
+    tok_union         reduce using rule 21 (CommaOrSemicolonOptional)
+    tok_void          reduce using rule 21 (CommaOrSemicolonOptional)
+    tok_xception      reduce using rule 21 (CommaOrSemicolonOptional)
+
+state 26 // tok_typedef tok_binary tok_identifier ';'
+
+   22 CommaOrSemicolonOptional: ';' .  [$end, ')', '[', ']', '{', '}', tok_binary, tok_bool, tok_const, tok_double, tok_dub_constant, tok_enum, tok_fieldcomment, tok_i16, tok_i32, tok_i64, tok_i8, tok_identifier, tok_int_constant, tok_list, tok_literal, tok_lobattr, tok_map, tok_oneway, tok_optional, tok_required, tok_senum, tok_service, tok_set, tok_slist, tok_string, tok_struct, tok_typedef, tok_union, tok_void, tok_xception]
+
+    $end              reduce using rule 22 (CommaOrSemicolonOptional)
+    ')'               reduce using rule 22 (CommaOrSemicolonOptional)
+    '['               reduce using rule 22 (CommaOrSemicolonOptional)
+    ']'               reduce using rule 22 (CommaOrSemicolonOptional)
+    '{'               reduce using rule 22 (CommaOrSemicolonOptional)
+    '}'               reduce using rule 22 (CommaOrSemicolonOptional)
+    tok_binary        reduce using rule 22 (CommaOrSemicolonOptional)
+    tok_bool          reduce using rule 22 (CommaOrSemicolonOptional)
+    tok_const         reduce using rule 22 (CommaOrSemicolonOptional)
+    tok_double        reduce using rule 22 (CommaOrSemicolonOptional)
+    tok_dub_constant  reduce using rule 22 (CommaOrSemicolonOptional)
+    tok_enum          reduce using rule 22 (CommaOrSemicolonOptional)
+    tok_fieldcomment  reduce using rule 22 (CommaOrSemicolonOptional)
+    tok_i16           reduce using rule 22 (CommaOrSemicolonOptional)
+    tok_i32           reduce using rule 22 (CommaOrSemicolonOptional)
+    tok_i64           reduce using rule 22 (CommaOrSemicolonOptional)
+    tok_i8            reduce using rule 22 (CommaOrSemicolonOptional)
+    tok_identifier    reduce using rule 22 (CommaOrSemicolonOptional)
+    tok_int_constant  reduce using rule 22 (CommaOrSemicolonOptional)
+    tok_list          reduce using rule 22 (CommaOrSemicolonOptional)
+    tok_literal       reduce using rule 22 (CommaOrSemicolonOptional)
+    tok_lobattr       reduce using rule 22 (CommaOrSemicolonOptional)
+    tok_map           reduce using rule 22 (CommaOrSemicolonOptional)
+    tok_oneway        reduce using rule 22 (CommaOrSemicolonOptional)
+    tok_optional      reduce using rule 22 (CommaOrSemicolonOptional)
+    tok_required      reduce using rule 22 (CommaOrSemicolonOptional)
+    tok_senum         reduce using rule 22 (CommaOrSemicolonOptional)
+    tok_service       reduce using rule 22 (CommaOrSemicolonOptional)
+    tok_set           reduce using rule 22 (CommaOrSemicolonOptional)
+    tok_slist         reduce using rule 22 (CommaOrSemicolonOptional)
+    tok_string        reduce using rule 22 (CommaOrSemicolonOptional)
+    tok_struct        reduce using rule 22 (CommaOrSemicolonOptional)
+    tok_typedef       reduce using rule 22 (CommaOrSemicolonOptional)
+    tok_union         reduce using rule 22 (CommaOrSemicolonOptional)
+    tok_void          reduce using rule 22 (CommaOrSemicolonOptional)
+    tok_xception      reduce using rule 22 (CommaOrSemicolonOptional)
+
+state 27 // tok_typedef tok_binary '(' tok_identifier [')']
+
+  112 TypeAnnotation: tok_identifier TypeAnnotationValue CommaOrSemicolonOptional . FieldComment
+  119 FieldComment: .  [')', tok_identifier]
+
+    ')'               reduce using rule 119 (FieldComment)
+    tok_fieldcomment  shift, and goto state 29
+    tok_identifier    reduce using rule 119 (FieldComment)
+
+    FieldComment  goto state 28
+
+state 28 // tok_typedef tok_binary '(' tok_identifier [')']
+
+  112 TypeAnnotation: tok_identifier TypeAnnotationValue CommaOrSemicolonOptional FieldComment .  [')', tok_identifier]
+
+    ')'             reduce using rule 112 (TypeAnnotation)
+    tok_identifier  reduce using rule 112 (TypeAnnotation)
+
+state 29 // tok_typedef tok_binary '(' tok_identifier tok_fieldcomment
+
+  118 FieldComment: tok_fieldcomment .  [$end, ')', '}', tok_binary, tok_bool, tok_const, tok_double, tok_enum, tok_i16, tok_i32, tok_i64, tok_i8, tok_identifier, tok_int_constant, tok_list, tok_lobattr, tok_map, tok_oneway, tok_optional, tok_required, tok_senum, tok_service, tok_set, tok_slist, tok_string, tok_struct, tok_typedef, tok_union, tok_void, tok_xception]
+
+    $end              reduce using rule 118 (FieldComment)
+    ')'               reduce using rule 118 (FieldComment)
+    '}'               reduce using rule 118 (FieldComment)
+    tok_binary        reduce using rule 118 (FieldComment)
+    tok_bool          reduce using rule 118 (FieldComment)
+    tok_const         reduce using rule 118 (FieldComment)
+    tok_double        reduce using rule 118 (FieldComment)
+    tok_enum          reduce using rule 118 (FieldComment)
+    tok_i16           reduce using rule 118 (FieldComment)
+    tok_i32           reduce using rule 118 (FieldComment)
+    tok_i64           reduce using rule 118 (FieldComment)
+    tok_i8            reduce using rule 118 (FieldComment)
+    tok_identifier    reduce using rule 118 (FieldComment)
+    tok_int_constant  reduce using rule 118 (FieldComment)
+    tok_list          reduce using rule 118 (FieldComment)
+    tok_lobattr       reduce using rule 118 (FieldComment)
+    tok_map           reduce using rule 118 (FieldComment)
+    tok_oneway        reduce using rule 118 (FieldComment)
+    tok_optional      reduce using rule 118 (FieldComment)
+    tok_required      reduce using rule 118 (FieldComment)
+    tok_senum         reduce using rule 118 (FieldComment)
+    tok_service       reduce using rule 118 (FieldComment)
+    tok_set           reduce using rule 118 (FieldComment)
+    tok_slist         reduce using rule 118 (FieldComment)
+    tok_string        reduce using rule 118 (FieldComment)
+    tok_struct        reduce using rule 118 (FieldComment)
+    tok_typedef       reduce using rule 118 (FieldComment)
+    tok_union         reduce using rule 118 (FieldComment)
+    tok_void          reduce using rule 118 (FieldComment)
+    tok_xception      reduce using rule 118 (FieldComment)
+
+state 30 // [tok_const]
+
+   11 DefinitionList: DefinitionList CaptureDocText . Definition
+  116 LobAttributeList: .  [tok_lobattr, tok_service]
+
+    tok_const     shift, and goto state 43
+    tok_enum      shift, and goto state 41
+    tok_lobattr   reduce using rule 116 (LobAttributeList)
+    tok_senum     shift, and goto state 42
+    tok_service   reduce using rule 116 (LobAttributeList)
+    tok_struct    shift, and goto state 44
+    tok_typedef   shift, and goto state 40
+    tok_union     shift, and goto state 45
+    tok_xception  shift, and goto state 47
+
+    Const             goto state 32
+    Definition        goto state 31
+    Enum              goto state 36
+    LobAttributeList  goto state 48
+    Senum             goto state 37
+    Service           goto state 34
+    Struct            goto state 38
+    StructHead        goto state 46
+    TypeDefinition    goto state 33
+    Typedef           goto state 35
+    Xception          goto state 39
+
+state 31 // tok_typedef tok_binary tok_identifier [$end]
+
+   11 DefinitionList: DefinitionList CaptureDocText Definition .  [$end, tok_const, tok_enum, tok_lobattr, tok_senum, tok_service, tok_struct, tok_typedef, tok_union, tok_xception]
+
+    $end          reduce using rule 11 (DefinitionList)
+    tok_const     reduce using rule 11 (DefinitionList)
+    tok_enum      reduce using rule 11 (DefinitionList)
+    tok_lobattr   reduce using rule 11 (DefinitionList)
+    tok_senum     reduce using rule 11 (DefinitionList)
+    tok_service   reduce using rule 11 (DefinitionList)
+    tok_struct    reduce using rule 11 (DefinitionList)
+    tok_typedef   reduce using rule 11 (DefinitionList)
+    tok_union     reduce using rule 11 (DefinitionList)
+    tok_xception  reduce using rule 11 (DefinitionList)
+
+state 32 // tok_const tok_binary tok_identifier '=' tok_dub_constant [$end]
+
+   13 Definition: Const .  [$end, tok_const, tok_enum, tok_lobattr, tok_senum, tok_service, tok_struct, tok_typedef, tok_union, tok_xception]
+
+    $end          reduce using rule 13 (Definition)
+    tok_const     reduce using rule 13 (Definition)
+    tok_enum      reduce using rule 13 (Definition)
+    tok_lobattr   reduce using rule 13 (Definition)
+    tok_senum     reduce using rule 13 (Definition)
+    tok_service   reduce using rule 13 (Definition)
+    tok_struct    reduce using rule 13 (Definition)
+    tok_typedef   reduce using rule 13 (Definition)
+    tok_union     reduce using rule 13 (Definition)
+    tok_xception  reduce using rule 13 (Definition)
+
+state 33 // tok_typedef tok_binary tok_identifier [$end]
+
+   14 Definition: TypeDefinition .  [$end, tok_const, tok_enum, tok_lobattr, tok_senum, tok_service, tok_struct, tok_typedef, tok_union, tok_xception]
+
+    $end          reduce using rule 14 (Definition)
+    tok_const     reduce using rule 14 (Definition)
+    tok_enum      reduce using rule 14 (Definition)
+    tok_lobattr   reduce using rule 14 (Definition)
+    tok_senum     reduce using rule 14 (Definition)
+    tok_service   reduce using rule 14 (Definition)
+    tok_struct    reduce using rule 14 (Definition)
+    tok_typedef   reduce using rule 14 (Definition)
+    tok_union     reduce using rule 14 (Definition)
+    tok_xception  reduce using rule 14 (Definition)
+
+state 34 // tok_service tok_identifier '{' '}' [$end]
+
+   15 Definition: Service .  [$end, tok_const, tok_enum, tok_lobattr, tok_senum, tok_service, tok_struct, tok_typedef, tok_union, tok_xception]
+
+    $end          reduce using rule 15 (Definition)
+    tok_const     reduce using rule 15 (Definition)
+    tok_enum      reduce using rule 15 (Definition)
+    tok_lobattr   reduce using rule 15 (Definition)
+    tok_senum     reduce using rule 15 (Definition)
+    tok_service   reduce using rule 15 (Definition)
+    tok_struct    reduce using rule 15 (Definition)
+    tok_typedef   reduce using rule 15 (Definition)
+    tok_union     reduce using rule 15 (Definition)
+    tok_xception  reduce using rule 15 (Definition)
+
+state 35 // tok_typedef tok_binary tok_identifier [$end]
+
+   16 TypeDefinition: Typedef .  [$end, tok_const, tok_enum, tok_lobattr, tok_senum, tok_service, tok_struct, tok_typedef, tok_union, tok_xception]
+
+    $end          reduce using rule 16 (TypeDefinition)
+    tok_const     reduce using rule 16 (TypeDefinition)
+    tok_enum      reduce using rule 16 (TypeDefinition)
+    tok_lobattr   reduce using rule 16 (TypeDefinition)
+    tok_senum     reduce using rule 16 (TypeDefinition)
+    tok_service   reduce using rule 16 (TypeDefinition)
+    tok_struct    reduce using rule 16 (TypeDefinition)
+    tok_typedef   reduce using rule 16 (TypeDefinition)
+    tok_union     reduce using rule 16 (TypeDefinition)
+    tok_xception  reduce using rule 16 (TypeDefinition)
+
+state 36 // tok_enum tok_identifier '{' '}' [$end]
+
+   17 TypeDefinition: Enum .  [$end, tok_const, tok_enum, tok_lobattr, tok_senum, tok_service, tok_struct, tok_typedef, tok_union, tok_xception]
+
+    $end          reduce using rule 17 (TypeDefinition)
+    tok_const     reduce using rule 17 (TypeDefinition)
+    tok_enum      reduce using rule 17 (TypeDefinition)
+    tok_lobattr   reduce using rule 17 (TypeDefinition)
+    tok_senum     reduce using rule 17 (TypeDefinition)
+    tok_service   reduce using rule 17 (TypeDefinition)
+    tok_struct    reduce using rule 17 (TypeDefinition)
+    tok_typedef   reduce using rule 17 (TypeDefinition)
+    tok_union     reduce using rule 17 (TypeDefinition)
+    tok_xception  reduce using rule 17 (TypeDefinition)
+
+state 37 // tok_senum tok_identifier '{' '}' [$end]
+
+   18 TypeDefinition: Senum .  [$end, tok_const, tok_enum, tok_lobattr, tok_senum, tok_service, tok_struct, tok_typedef, tok_union, tok_xception]
+
+    $end          reduce using rule 18 (TypeDefinition)
+    tok_const     reduce using rule 18 (TypeDefinition)
+    tok_enum      reduce using rule 18 (TypeDefinition)
+    tok_lobattr   reduce using rule 18 (TypeDefinition)
+    tok_senum     reduce using rule 18 (TypeDefinition)
+    tok_service   reduce using rule 18 (TypeDefinition)
+    tok_struct    reduce using rule 18 (TypeDefinition)
+    tok_typedef   reduce using rule 18 (TypeDefinition)
+    tok_union     reduce using rule 18 (TypeDefinition)
+    tok_xception  reduce using rule 18 (TypeDefinition)
+
+state 38 // tok_struct tok_identifier '{' '}' [$end]
+
+   19 TypeDefinition: Struct .  [$end, tok_const, tok_enum, tok_lobattr, tok_senum, tok_service, tok_struct, tok_typedef, tok_union, tok_xception]
+
+    $end          reduce using rule 19 (TypeDefinition)
+    tok_const     reduce using rule 19 (TypeDefinition)
+    tok_enum      reduce using rule 19 (TypeDefinition)
+    tok_lobattr   reduce using rule 19 (TypeDefinition)
+    tok_senum     reduce using rule 19 (TypeDefinition)
+    tok_service   reduce using rule 19 (TypeDefinition)
+    tok_struct    reduce using rule 19 (TypeDefinition)
+    tok_typedef   reduce using rule 19 (TypeDefinition)
+    tok_union     reduce using rule 19 (TypeDefinition)
+    tok_xception  reduce using rule 19 (TypeDefinition)
+
+state 39 // tok_xception tok_identifier '{' '}' [$end]
+
+   20 TypeDefinition: Xception .  [$end, tok_const, tok_enum, tok_lobattr, tok_senum, tok_service, tok_struct, tok_typedef, tok_union, tok_xception]
+
+    $end          reduce using rule 20 (TypeDefinition)
+    tok_const     reduce using rule 20 (TypeDefinition)
+    tok_enum      reduce using rule 20 (TypeDefinition)
+    tok_lobattr   reduce using rule 20 (TypeDefinition)
+    tok_senum     reduce using rule 20 (TypeDefinition)
+    tok_service   reduce using rule 20 (TypeDefinition)
+    tok_struct    reduce using rule 20 (TypeDefinition)
+    tok_typedef   reduce using rule 20 (TypeDefinition)
+    tok_union     reduce using rule 20 (TypeDefinition)
+    tok_xception  reduce using rule 20 (TypeDefinition)
+
+state 40 // tok_typedef
+
+   24 Typedef: tok_typedef . FieldType tok_identifier TypeAnnotations CommaOrSemicolonOptional
+
+    tok_binary      shift, and goto state 73
+    tok_bool        shift, and goto state 75
+    tok_double      shift, and goto state 80
+    tok_i16         shift, and goto state 77
+    tok_i32         shift, and goto state 78
+    tok_i64         shift, and goto state 79
+    tok_i8          shift, and goto state 76
+    tok_identifier  shift, and goto state 68
+    tok_list        shift, and goto state 87
+    tok_map         shift, and goto state 85
+    tok_set         shift, and goto state 86
+    tok_slist       shift, and goto state 74
+    tok_string      shift, and goto state 72
+
+    BaseType             goto state 69
+    ContainerType        goto state 70
+    FieldType            goto state 205
+    ListType             goto state 84
+    MapType              goto state 82
+    SetType              goto state 83
+    SimpleBaseType       goto state 71
+    SimpleContainerType  goto state 81
+
+state 41 // tok_enum
+
+   25 Enum: tok_enum . tok_identifier '{' EnumDefList '}' TypeAnnotations
+
+    tok_identifier  shift, and goto state 191
+
+state 42 // tok_senum
+
+   31 Senum: tok_senum . tok_identifier '{' SenumDefList '}' TypeAnnotations
+
+    tok_identifier  shift, and goto state 183
+
+state 43 // tok_const
+
+   35 Const: tok_const . FieldType tok_identifier '=' ConstValue CommaOrSemicolonOptional FieldComment
+
+    tok_binary      shift, and goto state 73
+    tok_bool        shift, and goto state 75
+    tok_double      shift, and goto state 80
+    tok_i16         shift, and goto state 77
+    tok_i32         shift, and goto state 78
+    tok_i64         shift, and goto state 79
+    tok_i8          shift, and goto state 76
+    tok_identifier  shift, and goto state 68
+    tok_list        shift, and goto state 87
+    tok_map         shift, and goto state 85
+    tok_set         shift, and goto state 86
+    tok_slist       shift, and goto state 74
+    tok_string      shift, and goto state 72
+
+    BaseType             goto state 69
+    ContainerType        goto state 70
+    FieldType            goto state 177
+    ListType             goto state 84
+    MapType              goto state 82
+    SetType              goto state 83
+    SimpleBaseType       goto state 71
+    SimpleContainerType  goto state 81
+
+state 44 // tok_struct
+
+   48 StructHead: tok_struct .  [tok_identifier]
+
+    tok_identifier  reduce using rule 48 (StructHead)
+
+state 45 // tok_union
+
+   49 StructHead: tok_union .  [tok_identifier]
+
+    tok_identifier  reduce using rule 49 (StructHead)
+
+state 46 // tok_struct [tok_identifier]
+
+   50 Struct: StructHead . tok_identifier XsdAll '{' FieldList '}' TypeAnnotations
+
+    tok_identifier  shift, and goto state 170
+
+state 47 // tok_xception
+
+   59 Xception: tok_xception . tok_identifier '{' FieldList '}' TypeAnnotations
+
+    tok_identifier  shift, and goto state 165
+
+state 48 // [tok_lobattr]
+
+   60 Service: LobAttributeList . tok_service tok_identifier Extends '{' FlagArgs FunctionList UnflagArgs '}' TypeAnnotations
+  115 LobAttributeList: LobAttributeList . LobAttribute
+
+    tok_lobattr  shift, and goto state 51
+    tok_service  shift, and goto state 49
+
+    LobAttribute  goto state 50
+
+state 49 // tok_service
+
+   60 Service: LobAttributeList tok_service . tok_identifier Extends '{' FlagArgs FunctionList UnflagArgs '}' TypeAnnotations
+
+    tok_identifier  shift, and goto state 52
+
+state 50 // tok_lobattr [tok_binary]
+
+  115 LobAttributeList: LobAttributeList LobAttribute .  [tok_binary, tok_bool, tok_double, tok_i16, tok_i32, tok_i64, tok_i8, tok_identifier, tok_list, tok_lobattr, tok_map, tok_oneway, tok_service, tok_set, tok_slist, tok_string, tok_void]
+
+    tok_binary      reduce using rule 115 (LobAttributeList)
+    tok_bool        reduce using rule 115 (LobAttributeList)
+    tok_double      reduce using rule 115 (LobAttributeList)
+    tok_i16         reduce using rule 115 (LobAttributeList)
+    tok_i32         reduce using rule 115 (LobAttributeList)
+    tok_i64         reduce using rule 115 (LobAttributeList)
+    tok_i8          reduce using rule 115 (LobAttributeList)
+    tok_identifier  reduce using rule 115 (LobAttributeList)
+    tok_list        reduce using rule 115 (LobAttributeList)
+    tok_lobattr     reduce using rule 115 (LobAttributeList)
+    tok_map         reduce using rule 115 (LobAttributeList)
+    tok_oneway      reduce using rule 115 (LobAttributeList)
+    tok_service     reduce using rule 115 (LobAttributeList)
+    tok_set         reduce using rule 115 (LobAttributeList)
+    tok_slist       reduce using rule 115 (LobAttributeList)
+    tok_string      reduce using rule 115 (LobAttributeList)
+    tok_void        reduce using rule 115 (LobAttributeList)
+
+state 51 // tok_lobattr
+
+  117 LobAttribute: tok_lobattr .  [tok_binary, tok_bool, tok_double, tok_i16, tok_i32, tok_i64, tok_i8, tok_identifier, tok_list, tok_lobattr, tok_map, tok_oneway, tok_service, tok_set, tok_slist, tok_string, tok_void]
+
+    tok_binary      reduce using rule 117 (LobAttribute)
+    tok_bool        reduce using rule 117 (LobAttribute)
+    tok_double      reduce using rule 117 (LobAttribute)
+    tok_i16         reduce using rule 117 (LobAttribute)
+    tok_i32         reduce using rule 117 (LobAttribute)
+    tok_i64         reduce using rule 117 (LobAttribute)
+    tok_i8          reduce using rule 117 (LobAttribute)
+    tok_identifier  reduce using rule 117 (LobAttribute)
+    tok_list        reduce using rule 117 (LobAttribute)
+    tok_lobattr     reduce using rule 117 (LobAttribute)
+    tok_map         reduce using rule 117 (LobAttribute)
+    tok_oneway      reduce using rule 117 (LobAttribute)
+    tok_service     reduce using rule 117 (LobAttribute)
+    tok_set         reduce using rule 117 (LobAttribute)
+    tok_slist       reduce using rule 117 (LobAttribute)
+    tok_string      reduce using rule 117 (LobAttribute)
+    tok_void        reduce using rule 117 (LobAttribute)
+
+state 52 // tok_service tok_identifier
+
+   60 Service: LobAttributeList tok_service tok_identifier . Extends '{' FlagArgs FunctionList UnflagArgs '}' TypeAnnotations
+   64 Extends: .  ['{']
+
+    '{'          reduce using rule 64 (Extends)
+    tok_extends  shift, and goto state 54
+
+    Extends  goto state 53
+
+state 53 // tok_service tok_identifier ['{']
+
+   60 Service: LobAttributeList tok_service tok_identifier Extends . '{' FlagArgs FunctionList UnflagArgs '}' TypeAnnotations
+
+    '{'  shift, and goto state 56
+
+state 54 // tok_service tok_identifier tok_extends
+
+   63 Extends: tok_extends . tok_identifier
+
+    tok_identifier  shift, and goto state 55
+
+state 55 // tok_service tok_identifier tok_extends tok_identifier
+
+   63 Extends: tok_extends tok_identifier .  ['{']
+
+    '{'  reduce using rule 63 (Extends)
+
+state 56 // tok_service tok_identifier '{'
+
+   60 Service: LobAttributeList tok_service tok_identifier Extends '{' . FlagArgs FunctionList UnflagArgs '}' TypeAnnotations
+   61 FlagArgs: .  ['}', tok_binary, tok_bool, tok_double, tok_i16, tok_i32, tok_i64, tok_i8, tok_identifier, tok_list, tok_lobattr, tok_map, tok_oneway, tok_set, tok_slist, tok_string, tok_void]
+
+    '}'             reduce using rule 61 (FlagArgs)
+    tok_binary      reduce using rule 61 (FlagArgs)
+    tok_bool        reduce using rule 61 (FlagArgs)
+    tok_double      reduce using rule 61 (FlagArgs)
+    tok_i16         reduce using rule 61 (FlagArgs)
+    tok_i32         reduce using rule 61 (FlagArgs)
+    tok_i64         reduce using rule 61 (FlagArgs)
+    tok_i8          reduce using rule 61 (FlagArgs)
+    tok_identifier  reduce using rule 61 (FlagArgs)
+    tok_list        reduce using rule 61 (FlagArgs)
+    tok_lobattr     reduce using rule 61 (FlagArgs)
+    tok_map         reduce using rule 61 (FlagArgs)
+    tok_oneway      reduce using rule 61 (FlagArgs)
+    tok_set         reduce using rule 61 (FlagArgs)
+    tok_slist       reduce using rule 61 (FlagArgs)
+    tok_string      reduce using rule 61 (FlagArgs)
+    tok_void        reduce using rule 61 (FlagArgs)
+
+    FlagArgs  goto state 57
+
+state 57 // tok_service tok_identifier '{' ['}']
+
+   60 Service: LobAttributeList tok_service tok_identifier Extends '{' FlagArgs . FunctionList UnflagArgs '}' TypeAnnotations
+   66 FunctionList: .  ['}', tok_binary, tok_bool, tok_double, tok_i16, tok_i32, tok_i64, tok_i8, tok_identifier, tok_list, tok_lobattr, tok_map, tok_oneway, tok_set, tok_slist, tok_string, tok_void]
+
+    '}'             reduce using rule 66 (FunctionList)
+    tok_binary      reduce using rule 66 (FunctionList)
+    tok_bool        reduce using rule 66 (FunctionList)
+    tok_double      reduce using rule 66 (FunctionList)
+    tok_i16         reduce using rule 66 (FunctionList)
+    tok_i32         reduce using rule 66 (FunctionList)
+    tok_i64         reduce using rule 66 (FunctionList)
+    tok_i8          reduce using rule 66 (FunctionList)
+    tok_identifier  reduce using rule 66 (FunctionList)
+    tok_list        reduce using rule 66 (FunctionList)
+    tok_lobattr     reduce using rule 66 (FunctionList)
+    tok_map         reduce using rule 66 (FunctionList)
+    tok_oneway      reduce using rule 66 (FunctionList)
+    tok_set         reduce using rule 66 (FunctionList)
+    tok_slist       reduce using rule 66 (FunctionList)
+    tok_string      reduce using rule 66 (FunctionList)
+    tok_void        reduce using rule 66 (FunctionList)
+
+    FunctionList  goto state 58
+
+state 58 // tok_service tok_identifier '{' ['}']
+
+   60 Service: LobAttributeList tok_service tok_identifier Extends '{' FlagArgs FunctionList . UnflagArgs '}' TypeAnnotations
+   65 FunctionList: FunctionList . Function
+    2 CaptureDocText: .  [tok_binary, tok_bool, tok_double, tok_i16, tok_i32, tok_i64, tok_i8, tok_identifier, tok_list, tok_lobattr, tok_map, tok_oneway, tok_set, tok_slist, tok_string, tok_void]
+   62 UnflagArgs: .  ['}']
+
+    '}'             reduce using rule 62 (UnflagArgs)
+    tok_binary      reduce using rule 2 (CaptureDocText)
+    tok_bool        reduce using rule 2 (CaptureDocText)
+    tok_double      reduce using rule 2 (CaptureDocText)
+    tok_i16         reduce using rule 2 (CaptureDocText)
+    tok_i32         reduce using rule 2 (CaptureDocText)
+    tok_i64         reduce using rule 2 (CaptureDocText)
+    tok_i8          reduce using rule 2 (CaptureDocText)
+    tok_identifier  reduce using rule 2 (CaptureDocText)
+    tok_list        reduce using rule 2 (CaptureDocText)
+    tok_lobattr     reduce using rule 2 (CaptureDocText)
+    tok_map         reduce using rule 2 (CaptureDocText)
+    tok_oneway      reduce using rule 2 (CaptureDocText)
+    tok_set         reduce using rule 2 (CaptureDocText)
+    tok_slist       reduce using rule 2 (CaptureDocText)
+    tok_string      reduce using rule 2 (CaptureDocText)
+    tok_void        reduce using rule 2 (CaptureDocText)
+
+    CaptureDocText  goto state 61
+    Function        goto state 60
+    UnflagArgs      goto state 59
+
+state 59 // tok_service tok_identifier '{' ['}']
+
+   60 Service: LobAttributeList tok_service tok_identifier Extends '{' FlagArgs FunctionList UnflagArgs . '}' TypeAnnotations
+
+    '}'  shift, and goto state 163
+
+state 60 // tok_service tok_identifier '{' tok_binary tok_identifier '(' ')' ['}']
+
+   65 FunctionList: FunctionList Function .  ['}', tok_binary, tok_bool, tok_double, tok_i16, tok_i32, tok_i64, tok_i8, tok_identifier, tok_list, tok_lobattr, tok_map, tok_oneway, tok_set, tok_slist, tok_string, tok_void]
+
+    '}'             reduce using rule 65 (FunctionList)
+    tok_binary      reduce using rule 65 (FunctionList)
+    tok_bool        reduce using rule 65 (FunctionList)
+    tok_double      reduce using rule 65 (FunctionList)
+    tok_i16         reduce using rule 65 (FunctionList)
+    tok_i32         reduce using rule 65 (FunctionList)
+    tok_i64         reduce using rule 65 (FunctionList)
+    tok_i8          reduce using rule 65 (FunctionList)
+    tok_identifier  reduce using rule 65 (FunctionList)
+    tok_list        reduce using rule 65 (FunctionList)
+    tok_lobattr     reduce using rule 65 (FunctionList)
+    tok_map         reduce using rule 65 (FunctionList)
+    tok_oneway      reduce using rule 65 (FunctionList)
+    tok_set         reduce using rule 65 (FunctionList)
+    tok_slist       reduce using rule 65 (FunctionList)
+    tok_string      reduce using rule 65 (FunctionList)
+    tok_void        reduce using rule 65 (FunctionList)
+
+state 61 // tok_service tok_identifier '{' [tok_binary]
+
+   67 Function: CaptureDocText . LobAttributeList Oneway FunctionType tok_identifier '(' FieldList ')' Throws TypeAnnotations CommaOrSemicolonOptional FieldComment
+  116 LobAttributeList: .  [tok_binary, tok_bool, tok_double, tok_i16, tok_i32, tok_i64, tok_i8, tok_identifier, tok_list, tok_lobattr, tok_map, tok_oneway, tok_set, tok_slist, tok_string, tok_void]
+
+    tok_binary      reduce using rule 116 (LobAttributeList)
+    tok_bool        reduce using rule 116 (LobAttributeList)
+    tok_double      reduce using rule 116 (LobAttributeList)
+    tok_i16         reduce using rule 116 (LobAttributeList)
+    tok_i32         reduce using rule 116 (LobAttributeList)
+    tok_i64         reduce using rule 116 (LobAttributeList)
+    tok_i8          reduce using rule 116 (LobAttributeList)
+    tok_identifier  reduce using rule 116 (LobAttributeList)
+    tok_list        reduce using rule 116 (LobAttributeList)
+    tok_lobattr     reduce using rule 116 (LobAttributeList)
+    tok_map         reduce using rule 116 (LobAttributeList)
+    tok_oneway      reduce using rule 116 (LobAttributeList)
+    tok_set         reduce using rule 116 (LobAttributeList)
+    tok_slist       reduce using rule 116 (LobAttributeList)
+    tok_string      reduce using rule 116 (LobAttributeList)
+    tok_void        reduce using rule 116 (LobAttributeList)
+
+    LobAttributeList  goto state 62
+
+state 62 // tok_service tok_identifier '{' [tok_binary]
+
+   67 Function: CaptureDocText LobAttributeList . Oneway FunctionType tok_identifier '(' FieldList ')' Throws TypeAnnotations CommaOrSemicolonOptional FieldComment
+  115 LobAttributeList: LobAttributeList . LobAttribute
+   69 Oneway: .  [tok_binary, tok_bool, tok_double, tok_i16, tok_i32, tok_i64, tok_i8, tok_identifier, tok_list, tok_map, tok_set, tok_slist, tok_string, tok_void]
+
+    tok_binary      reduce using rule 69 (Oneway)
+    tok_bool        reduce using rule 69 (Oneway)
+    tok_double      reduce using rule 69 (Oneway)
+    tok_i16         reduce using rule 69 (Oneway)
+    tok_i32         reduce using rule 69 (Oneway)
+    tok_i64         reduce using rule 69 (Oneway)
+    tok_i8          reduce using rule 69 (Oneway)
+    tok_identifier  reduce using rule 69 (Oneway)
+    tok_list        reduce using rule 69 (Oneway)
+    tok_lobattr     shift, and goto state 51
+    tok_map         reduce using rule 69 (Oneway)
+    tok_oneway      shift, and goto state 64
+    tok_set         reduce using rule 69 (Oneway)
+    tok_slist       reduce using rule 69 (Oneway)
+    tok_string      reduce using rule 69 (Oneway)
+    tok_void        reduce using rule 69 (Oneway)
+
+    LobAttribute  goto state 50
+    Oneway        goto state 63
+
+state 63 // tok_service tok_identifier '{' [tok_binary]
+
+   67 Function: CaptureDocText LobAttributeList Oneway . FunctionType tok_identifier '(' FieldList ')' Throws TypeAnnotations CommaOrSemicolonOptional FieldComment
+
+    tok_binary      shift, and goto state 73
+    tok_bool        shift, and goto state 75
+    tok_double      shift, and goto state 80
+    tok_i16         shift, and goto state 77
+    tok_i32         shift, and goto state 78
+    tok_i64         shift, and goto state 79
+    tok_i8          shift, and goto state 76
+    tok_identifier  shift, and goto state 68
+    tok_list        shift, and goto state 87
+    tok_map         shift, and goto state 85
+    tok_set         shift, and goto state 86
+    tok_slist       shift, and goto state 74
+    tok_string      shift, and goto state 72
+    tok_void        shift, and goto state 67
+
+    BaseType             goto state 69
+    ContainerType        goto state 70
+    FieldType            goto state 66
+    FunctionType         goto state 65
+    ListType             goto state 84
+    MapType              goto state 82
+    SetType              goto state 83
+    SimpleBaseType       goto state 71
+    SimpleContainerType  goto state 81
+
+state 64 // tok_service tok_identifier '{' tok_oneway
+
+   68 Oneway: tok_oneway .  [tok_binary, tok_bool, tok_double, tok_i16, tok_i32, tok_i64, tok_i8, tok_identifier, tok_list, tok_map, tok_set, tok_slist, tok_string, tok_void]
+
+    tok_binary      reduce using rule 68 (Oneway)
+    tok_bool        reduce using rule 68 (Oneway)
+    tok_double      reduce using rule 68 (Oneway)
+    tok_i16         reduce using rule 68 (Oneway)
+    tok_i32         reduce using rule 68 (Oneway)
+    tok_i64         reduce using rule 68 (Oneway)
+    tok_i8          reduce using rule 68 (Oneway)
+    tok_identifier  reduce using rule 68 (Oneway)
+    tok_list        reduce using rule 68 (Oneway)
+    tok_map         reduce using rule 68 (Oneway)
+    tok_set         reduce using rule 68 (Oneway)
+    tok_slist       reduce using rule 68 (Oneway)
+    tok_string      reduce using rule 68 (Oneway)
+    tok_void        reduce using rule 68 (Oneway)
+
+state 65 // tok_service tok_identifier '{' tok_binary [tok_identifier]
+
+   67 Function: CaptureDocText LobAttributeList Oneway FunctionType . tok_identifier '(' FieldList ')' Throws TypeAnnotations CommaOrSemicolonOptional FieldComment
+
+    tok_identifier  shift, and goto state 106
+
+state 66 // tok_service tok_identifier '{' tok_binary [tok_identifier]
+
+   84 FunctionType: FieldType .  [tok_identifier]
+
+    tok_identifier  reduce using rule 84 (FunctionType)
+
+state 67 // tok_service tok_identifier '{' tok_void
+
+   85 FunctionType: tok_void .  [tok_identifier]
+
+    tok_identifier  reduce using rule 85 (FunctionType)
+
+state 68 // tok_typedef tok_identifier
+
+   86 FieldType: tok_identifier .  [',', '>', tok_identifier, tok_reference]
+
+    ','             reduce using rule 86 (FieldType)
+    '>'             reduce using rule 86 (FieldType)
+    tok_identifier  reduce using rule 86 (FieldType)
+    tok_reference   reduce using rule 86 (FieldType)
+
+state 69 // tok_typedef tok_binary [',']
+
+   87 FieldType: BaseType .  [',', '>', tok_identifier, tok_reference]
+
+    ','             reduce using rule 87 (FieldType)
+    '>'             reduce using rule 87 (FieldType)
+    tok_identifier  reduce using rule 87 (FieldType)
+    tok_reference   reduce using rule 87 (FieldType)
+
+state 70 // tok_typedef tok_list '<' tok_binary '>' [',']
+
+   88 FieldType: ContainerType .  [',', '>', tok_identifier, tok_reference]
+
+    ','             reduce using rule 88 (FieldType)
+    '>'             reduce using rule 88 (FieldType)
+    tok_identifier  reduce using rule 88 (FieldType)
+    tok_reference   reduce using rule 88 (FieldType)
+
+state 71 // tok_typedef tok_binary ['(']
+
+   89 BaseType: SimpleBaseType . TypeAnnotations
+  109 TypeAnnotations: .  [',', '>', tok_identifier, tok_reference]
+
+    '('             shift, and goto state 17
+    ','             reduce using rule 109 (TypeAnnotations)
+    '>'             reduce using rule 109 (TypeAnnotations)
+    tok_identifier  reduce using rule 109 (TypeAnnotations)
+    tok_reference   reduce using rule 109 (TypeAnnotations)
+
+    TypeAnnotations  goto state 105
+
+state 72 // tok_typedef tok_string
+
+   90 SimpleBaseType: tok_string .  ['(', ',', '>', tok_identifier, tok_reference]
+
+    '('             reduce using rule 90 (SimpleBaseType)
+    ','             reduce using rule 90 (SimpleBaseType)
+    '>'             reduce using rule 90 (SimpleBaseType)
+    tok_identifier  reduce using rule 90 (SimpleBaseType)
+    tok_reference   reduce using rule 90 (SimpleBaseType)
+
+state 73 // tok_const tok_binary
+
+   91 SimpleBaseType: tok_binary .  ['(', ',', '>', tok_identifier, tok_reference]
+
+    '('             reduce using rule 91 (SimpleBaseType)
+    ','             reduce using rule 91 (SimpleBaseType)
+    '>'             reduce using rule 91 (SimpleBaseType)
+    tok_identifier  reduce using rule 91 (SimpleBaseType)
+    tok_reference   reduce using rule 91 (SimpleBaseType)
+
+state 74 // tok_typedef tok_slist
+
+   92 SimpleBaseType: tok_slist .  ['(', ',', '>', tok_identifier, tok_reference]
+
+    '('             reduce using rule 92 (SimpleBaseType)
+    ','             reduce using rule 92 (SimpleBaseType)
+    '>'             reduce using rule 92 (SimpleBaseType)
+    tok_identifier  reduce using rule 92 (SimpleBaseType)
+    tok_reference   reduce using rule 92 (SimpleBaseType)
+
+state 75 // tok_const tok_bool
+
+   93 SimpleBaseType: tok_bool .  ['(', ',', '>', tok_identifier, tok_reference]
+
+    '('             reduce using rule 93 (SimpleBaseType)
+    ','             reduce using rule 93 (SimpleBaseType)
+    '>'             reduce using rule 93 (SimpleBaseType)
+    tok_identifier  reduce using rule 93 (SimpleBaseType)
+    tok_reference   reduce using rule 93 (SimpleBaseType)
+
+state 76 // tok_const tok_i8
+
+   94 SimpleBaseType: tok_i8 .  ['(', ',', '>', tok_identifier, tok_reference]
+
+    '('             reduce using rule 94 (SimpleBaseType)
+    ','             reduce using rule 94 (SimpleBaseType)
+    '>'             reduce using rule 94 (SimpleBaseType)
+    tok_identifier  reduce using rule 94 (SimpleBaseType)
+    tok_reference   reduce using rule 94 (SimpleBaseType)
+
+state 77 // tok_const tok_i16
+
+   95 SimpleBaseType: tok_i16 .  ['(', ',', '>', tok_identifier, tok_reference]
+
+    '('             reduce using rule 95 (SimpleBaseType)
+    ','             reduce using rule 95 (SimpleBaseType)
+    '>'             reduce using rule 95 (SimpleBaseType)
+    tok_identifier  reduce using rule 95 (SimpleBaseType)
+    tok_reference   reduce using rule 95 (SimpleBaseType)
+
+state 78 // tok_const tok_i32
+
+   96 SimpleBaseType: tok_i32 .  ['(', ',', '>', tok_identifier, tok_reference]
+
+    '('             reduce using rule 96 (SimpleBaseType)
+    ','             reduce using rule 96 (SimpleBaseType)
+    '>'             reduce using rule 96 (SimpleBaseType)
+    tok_identifier  reduce using rule 96 (SimpleBaseType)
+    tok_reference   reduce using rule 96 (SimpleBaseType)
+
+state 79 // tok_const tok_i64
+
+   97 SimpleBaseType: tok_i64 .  ['(', ',', '>', tok_identifier, tok_reference]
+
+    '('             reduce using rule 97 (SimpleBaseType)
+    ','             reduce using rule 97 (SimpleBaseType)
+    '>'             reduce using rule 97 (SimpleBaseType)
+    tok_identifier  reduce using rule 97 (SimpleBaseType)
+    tok_reference   reduce using rule 97 (SimpleBaseType)
+
+state 80 // tok_const tok_double
+
+   98 SimpleBaseType: tok_double .  ['(', ',', '>', tok_identifier, tok_reference]
+
+    '('             reduce using rule 98 (SimpleBaseType)
+    ','             reduce using rule 98 (SimpleBaseType)
+    '>'             reduce using rule 98 (SimpleBaseType)
+    tok_identifier  reduce using rule 98 (SimpleBaseType)
+    tok_reference   reduce using rule 98 (SimpleBaseType)
+
+state 81 // tok_typedef tok_list '<' tok_binary '>' ['(']
+
+   99 ContainerType: SimpleContainerType . TypeAnnotations
+  109 TypeAnnotations: .  [',', '>', tok_identifier, tok_reference]
+
+    '('             shift, and goto state 17
+    ','             reduce using rule 109 (TypeAnnotations)
+    '>'             reduce using rule 109 (TypeAnnotations)
+    tok_identifier  reduce using rule 109 (TypeAnnotations)
+    tok_reference   reduce using rule 109 (TypeAnnotations)
+
+    TypeAnnotations  goto state 104
+
+state 82 // tok_const tok_map '<' tok_binary ',' tok_binary '>' ['(']
+
+  100 SimpleContainerType: MapType .  ['(', ',', '>', tok_identifier, tok_reference]
+
+    '('             reduce using rule 100 (SimpleContainerType)
+    ','             reduce using rule 100 (SimpleContainerType)
+    '>'             reduce using rule 100 (SimpleContainerType)
+    tok_identifier  reduce using rule 100 (SimpleContainerType)
+    tok_reference   reduce using rule 100 (SimpleContainerType)
+
+state 83 // tok_typedef tok_set '<' tok_binary '>' ['(']
+
+  101 SimpleContainerType: SetType .  ['(', ',', '>', tok_identifier, tok_reference]
+
+    '('             reduce using rule 101 (SimpleContainerType)
+    ','             reduce using rule 101 (SimpleContainerType)
+    '>'             reduce using rule 101 (SimpleContainerType)
+    tok_identifier  reduce using rule 101 (SimpleContainerType)
+    tok_reference   reduce using rule 101 (SimpleContainerType)
+
+state 84 // tok_typedef tok_list '<' tok_binary '>' ['(']
+
+  102 SimpleContainerType: ListType .  ['(', ',', '>', tok_identifier, tok_reference]
+
+    '('             reduce using rule 102 (SimpleContainerType)
+    ','             reduce using rule 102 (SimpleContainerType)
+    '>'             reduce using rule 102 (SimpleContainerType)
+    tok_identifier  reduce using rule 102 (SimpleContainerType)
+    tok_reference   reduce using rule 102 (SimpleContainerType)
+
+state 85 // tok_typedef tok_map
+
+  103 MapType: tok_map . CppType '<' FieldType ',' FieldType '>'
+  107 CppType: .  ['<']
+
+    '<'           reduce using rule 107 (CppType)
+    tok_cpp_type  shift, and goto state 92
+
+    CppType  goto state 98
+
+state 86 // tok_typedef tok_set
+
+  104 SetType: tok_set . CppType '<' FieldType '>'
+  107 CppType: .  ['<']
+
+    '<'           reduce using rule 107 (CppType)
+    tok_cpp_type  shift, and goto state 92
+
+    CppType  goto state 94
+
+state 87 // tok_typedef tok_list
+
+  105 ListType: tok_list . '<' FieldType '>' CppType
+
+    '<'  shift, and goto state 88
+
+state 88 // tok_typedef tok_list '<'
+
+  105 ListType: tok_list '<' . FieldType '>' CppType
+
+    tok_binary      shift, and goto state 73
+    tok_bool        shift, and goto state 75
+    tok_double      shift, and goto state 80
+    tok_i16         shift, and goto state 77
+    tok_i32         shift, and goto state 78
+    tok_i64         shift, and goto state 79
+    tok_i8          shift, and goto state 76
+    tok_identifier  shift, and goto state 68
+    tok_list        shift, and goto state 87
+    tok_map         shift, and goto state 85
+    tok_set         shift, and goto state 86
+    tok_slist       shift, and goto state 74
+    tok_string      shift, and goto state 72
+
+    BaseType             goto state 69
+    ContainerType        goto state 70
+    FieldType            goto state 89
+    ListType             goto state 84
+    MapType              goto state 82
+    SetType              goto state 83
+    SimpleBaseType       goto state 71
+    SimpleContainerType  goto state 81
+
+state 89 // tok_typedef tok_list '<' tok_binary ['>']
+
+  105 ListType: tok_list '<' FieldType . '>' CppType
+
+    '>'  shift, and goto state 90
+
+state 90 // tok_typedef tok_list '<' tok_binary '>'
+
+  105 ListType: tok_list '<' FieldType '>' . CppType
+  107 CppType: .  ['(', ',', '>', tok_identifier, tok_reference]
+
+    '('             reduce using rule 107 (CppType)
+    ','             reduce using rule 107 (CppType)
+    '>'             reduce using rule 107 (CppType)
+    tok_cpp_type    shift, and goto state 92
+    tok_identifier  reduce using rule 107 (CppType)
+    tok_reference   reduce using rule 107 (CppType)
+
+    CppType  goto state 91
+
+state 91 // tok_typedef tok_list '<' tok_binary '>' ['(']
+
+  105 ListType: tok_list '<' FieldType '>' CppType .  ['(', ',', '>', tok_identifier, tok_reference]
+
+    '('             reduce using rule 105 (ListType)
+    ','             reduce using rule 105 (ListType)
+    '>'             reduce using rule 105 (ListType)
+    tok_identifier  reduce using rule 105 (ListType)
+    tok_reference   reduce using rule 105 (ListType)
+
+state 92 // tok_typedef tok_map tok_cpp_type
+
+  106 CppType: tok_cpp_type . tok_literal
+
+    tok_literal  shift, and goto state 93
+
+state 93 // tok_typedef tok_map tok_cpp_type tok_literal
+
+  106 CppType: tok_cpp_type tok_literal .  ['(', ',', '<', '>', tok_identifier, tok_reference]
+
+    '('             reduce using rule 106 (CppType)
+    ','             reduce using rule 106 (CppType)
+    '<'             reduce using rule 106 (CppType)
+    '>'             reduce using rule 106 (CppType)
+    tok_identifier  reduce using rule 106 (CppType)
+    tok_reference   reduce using rule 106 (CppType)
+
+state 94 // tok_typedef tok_set ['<']
+
+  104 SetType: tok_set CppType . '<' FieldType '>'
+
+    '<'  shift, and goto state 95
+
+state 95 // tok_typedef tok_set '<'
+
+  104 SetType: tok_set CppType '<' . FieldType '>'
+
+    tok_binary      shift, and goto state 73
+    tok_bool        shift, and goto state 75
+    tok_double      shift, and goto state 80
+    tok_i16         shift, and goto state 77
+    tok_i32         shift, and goto state 78
+    tok_i64         shift, and goto state 79
+    tok_i8          shift, and goto state 76
+    tok_identifier  shift, and goto state 68
+    tok_list        shift, and goto state 87
+    tok_map         shift, and goto state 85
+    tok_set         shift, and goto state 86
+    tok_slist       shift, and goto state 74
+    tok_string      shift, and goto state 72
+
+    BaseType             goto state 69
+    ContainerType        goto state 70
+    FieldType            goto state 96
+    ListType             goto state 84
+    MapType              goto state 82
+    SetType              goto state 83
+    SimpleBaseType       goto state 71
+    SimpleContainerType  goto state 81
+
+state 96 // tok_typedef tok_set '<' tok_binary ['>']
+
+  104 SetType: tok_set CppType '<' FieldType . '>'
+
+    '>'  shift, and goto state 97
+
+state 97 // tok_typedef tok_set '<' tok_binary '>'
+
+  104 SetType: tok_set CppType '<' FieldType '>' .  ['(', ',', '>', tok_identifier, tok_reference]
+
+    '('             reduce using rule 104 (SetType)
+    ','             reduce using rule 104 (SetType)
+    '>'             reduce using rule 104 (SetType)
+    tok_identifier  reduce using rule 104 (SetType)
+    tok_reference   reduce using rule 104 (SetType)
+
+state 98 // tok_typedef tok_map ['<']
+
+  103 MapType: tok_map CppType . '<' FieldType ',' FieldType '>'
+
+    '<'  shift, and goto state 99
+
+state 99 // tok_typedef tok_map '<'
+
+  103 MapType: tok_map CppType '<' . FieldType ',' FieldType '>'
+
+    tok_binary      shift, and goto state 73
+    tok_bool        shift, and goto state 75
+    tok_double      shift, and goto state 80
+    tok_i16         shift, and goto state 77
+    tok_i32         shift, and goto state 78
+    tok_i64         shift, and goto state 79
+    tok_i8          shift, and goto state 76
+    tok_identifier  shift, and goto state 68
+    tok_list        shift, and goto state 87
+    tok_map         shift, and goto state 85
+    tok_set         shift, and goto state 86
+    tok_slist       shift, and goto state 74
+    tok_string      shift, and goto state 72
+
+    BaseType             goto state 69
+    ContainerType        goto state 70
+    FieldType            goto state 100
+    ListType             goto state 84
+    MapType              goto state 82
+    SetType              goto state 83
+    SimpleBaseType       goto state 71
+    SimpleContainerType  goto state 81
+
+state 100 // tok_typedef tok_map '<' tok_binary [',']
+
+  103 MapType: tok_map CppType '<' FieldType . ',' FieldType '>'
+
+    ','  shift, and goto state 101
+
+state 101 // tok_typedef tok_map '<' tok_binary ','
+
+  103 MapType: tok_map CppType '<' FieldType ',' . FieldType '>'
+
+    tok_binary      shift, and goto state 73
+    tok_bool        shift, and goto state 75
+    tok_double      shift, and goto state 80
+    tok_i16         shift, and goto state 77
+    tok_i32         shift, and goto state 78
+    tok_i64         shift, and goto state 79
+    tok_i8          shift, and goto state 76
+    tok_identifier  shift, and goto state 68
+    tok_list        shift, and goto state 87
+    tok_map         shift, and goto state 85
+    tok_set         shift, and goto state 86
+    tok_slist       shift, and goto state 74
+    tok_string      shift, and goto state 72
+
+    BaseType             goto state 69
+    ContainerType        goto state 70
+    FieldType            goto state 102
+    ListType             goto state 84
+    MapType              goto state 82
+    SetType              goto state 83
+    SimpleBaseType       goto state 71
+    SimpleContainerType  goto state 81
+
+state 102 // tok_typedef tok_map '<' tok_binary ',' tok_binary ['>']
+
+  103 MapType: tok_map CppType '<' FieldType ',' FieldType . '>'
+
+    '>'  shift, and goto state 103
+
+state 103 // tok_typedef tok_map '<' tok_binary ',' tok_binary '>'
+
+  103 MapType: tok_map CppType '<' FieldType ',' FieldType '>' .  ['(', ',', '>', tok_identifier, tok_reference]
+
+    '('             reduce using rule 103 (MapType)
+    ','             reduce using rule 103 (MapType)
+    '>'             reduce using rule 103 (MapType)
+    tok_identifier  reduce using rule 103 (MapType)
+    tok_reference   reduce using rule 103 (MapType)
+
+state 104 // tok_typedef tok_list '<' tok_binary '>' [',']
+
+   99 ContainerType: SimpleContainerType TypeAnnotations .  [',', '>', tok_identifier, tok_reference]
+
+    ','             reduce using rule 99 (ContainerType)
+    '>'             reduce using rule 99 (ContainerType)
+    tok_identifier  reduce using rule 99 (ContainerType)
+    tok_reference   reduce using rule 99 (ContainerType)
+
+state 105 // tok_typedef tok_binary [',']
+
+   89 BaseType: SimpleBaseType TypeAnnotations .  [',', '>', tok_identifier, tok_reference]
+
+    ','             reduce using rule 89 (BaseType)
+    '>'             reduce using rule 89 (BaseType)
+    tok_identifier  reduce using rule 89 (BaseType)
+    tok_reference   reduce using rule 89 (BaseType)
+
+state 106 // tok_service tok_identifier '{' tok_binary tok_identifier
+
+   67 Function: CaptureDocText LobAttributeList Oneway FunctionType tok_identifier . '(' FieldList ')' Throws TypeAnnotations CommaOrSemicolonOptional FieldComment
+
+    '('  shift, and goto state 107
+
+state 107 // tok_service tok_identifier '{' tok_binary tok_identifier '('
+
+   67 Function: CaptureDocText LobAttributeList Oneway FunctionType tok_identifier '(' . FieldList ')' Throws TypeAnnotations CommaOrSemicolonOptional FieldComment
+   73 FieldList: .  [')', tok_binary, tok_bool, tok_double, tok_i16, tok_i32, tok_i64, tok_i8, tok_identifier, tok_int_constant, tok_list, tok_map, tok_optional, tok_required, tok_set, tok_slist, tok_string]
+
+    ')'               reduce using rule 73 (FieldList)
+    tok_binary        reduce using rule 73 (FieldList)
+    tok_bool          reduce using rule 73 (FieldList)
+    tok_double        reduce using rule 73 (FieldList)
+    tok_i16           reduce using rule 73 (FieldList)
+    tok_i32           reduce using rule 73 (FieldList)
+    tok_i64           reduce using rule 73 (FieldList)
+    tok_i8            reduce using rule 73 (FieldList)
+    tok_identifier    reduce using rule 73 (FieldList)
+    tok_int_constant  reduce using rule 73 (FieldList)
+    tok_list          reduce using rule 73 (FieldList)
+    tok_map           reduce using rule 73 (FieldList)
+    tok_optional      reduce using rule 73 (FieldList)
+    tok_required      reduce using rule 73 (FieldList)
+    tok_set           reduce using rule 73 (FieldList)
+    tok_slist         reduce using rule 73 (FieldList)
+    tok_string        reduce using rule 73 (FieldList)
+
+    FieldList  goto state 108
+
+state 108 // tok_service tok_identifier '{' tok_binary tok_identifier '(' [')']
+
+   67 Function: CaptureDocText LobAttributeList Oneway FunctionType tok_identifier '(' FieldList . ')' Throws TypeAnnotations CommaOrSemicolonOptional FieldComment
+   72 FieldList: FieldList . Field
+    2 CaptureDocText: .  [tok_binary, tok_bool, tok_double, tok_i16, tok_i32, tok_i64, tok_i8, tok_identifier, tok_int_constant, tok_list, tok_map, tok_optional, tok_required, tok_set, tok_slist, tok_string]
+
+    ')'               shift, and goto state 109
+    tok_binary        reduce using rule 2 (CaptureDocText)
+    tok_bool          reduce using rule 2 (CaptureDocText)
+    tok_double        reduce using rule 2 (CaptureDocText)
+    tok_i16           reduce using rule 2 (CaptureDocText)
+    tok_i32           reduce using rule 2 (CaptureDocText)
+    tok_i64           reduce using rule 2 (CaptureDocText)
+    tok_i8            reduce using rule 2 (CaptureDocText)
+    tok_identifier    reduce using rule 2 (CaptureDocText)
+    tok_int_constant  reduce using rule 2 (CaptureDocText)
+    tok_list          reduce using rule 2 (CaptureDocText)
+    tok_map           reduce using rule 2 (CaptureDocText)
+    tok_optional      reduce using rule 2 (CaptureDocText)
+    tok_required      reduce using rule 2 (CaptureDocText)
+    tok_set           reduce using rule 2 (CaptureDocText)
+    tok_slist         reduce using rule 2 (CaptureDocText)
+    tok_string        reduce using rule 2 (CaptureDocText)
+
+    CaptureDocText  goto state 111
+    Field           goto state 110
+
+state 109 // tok_service tok_identifier '{' tok_binary tok_identifier '(' ')'
+
+   67 Function: CaptureDocText LobAttributeList Oneway FunctionType tok_identifier '(' FieldList ')' . Throws TypeAnnotations CommaOrSemicolonOptional FieldComment
+   71 Throws: .  ['(', ',', ';', '}', tok_binary, tok_bool, tok_double, tok_fieldcomment, tok_i16, tok_i32, tok_i64, tok_i8, tok_identifier, tok_list, tok_lobattr, tok_map, tok_oneway, tok_set, tok_slist, tok_string, tok_void]
+
+    '('               reduce using rule 71 (Throws)
+    ','               reduce using rule 71 (Throws)
+    ';'               reduce using rule 71 (Throws)
+    '}'               reduce using rule 71 (Throws)
+    tok_binary        reduce using rule 71 (Throws)
+    tok_bool          reduce using rule 71 (Throws)
+    tok_double        reduce using rule 71 (Throws)
+    tok_fieldcomment  reduce using rule 71 (Throws)
+    tok_i16           reduce using rule 71 (Throws)
+    tok_i32           reduce using rule 71 (Throws)
+    tok_i64           reduce using rule 71 (Throws)
+    tok_i8            reduce using rule 71 (Throws)
+    tok_identifier    reduce using rule 71 (Throws)
+    tok_list          reduce using rule 71 (Throws)
+    tok_lobattr       reduce using rule 71 (Throws)
+    tok_map           reduce using rule 71 (Throws)
+    tok_oneway        reduce using rule 71 (Throws)
+    tok_set           reduce using rule 71 (Throws)
+    tok_slist         reduce using rule 71 (Throws)
+    tok_string        reduce using rule 71 (Throws)
+    tok_throws        shift, and goto state 156
+    tok_void          reduce using rule 71 (Throws)
+
+    Throws  goto state 155
+
+state 110 // tok_xception tok_identifier '{' tok_binary tok_identifier [')']
+
+   72 FieldList: FieldList Field .  [')', '}', tok_binary, tok_bool, tok_double, tok_i16, tok_i32, tok_i64, tok_i8, tok_identifier, tok_int_constant, tok_list, tok_map, tok_optional, tok_required, tok_set, tok_slist, tok_string]
+
+    ')'               reduce using rule 72 (FieldList)
+    '}'               reduce using rule 72 (FieldList)
+    tok_binary        reduce using rule 72 (FieldList)
+    tok_bool          reduce using rule 72 (FieldList)
+    tok_double        reduce using rule 72 (FieldList)
+    tok_i16           reduce using rule 72 (FieldList)
+    tok_i32           reduce using rule 72 (FieldList)
+    tok_i64           reduce using rule 72 (FieldList)
+    tok_i8            reduce using rule 72 (FieldList)
+    tok_identifier    reduce using rule 72 (FieldList)
+    tok_int_constant  reduce using rule 72 (FieldList)
+    tok_list          reduce using rule 72 (FieldList)
+    tok_map           reduce using rule 72 (FieldList)
+    tok_optional      reduce using rule 72 (FieldList)
+    tok_required      reduce using rule 72 (FieldList)
+    tok_set           reduce using rule 72 (FieldList)
+    tok_slist         reduce using rule 72 (FieldList)
+    tok_string        reduce using rule 72 (FieldList)
+
+state 111 // tok_xception tok_identifier '{' [tok_binary]
+
+   74 Field: CaptureDocText . FieldIdentifier FieldRequiredness FieldType FieldReference tok_identifier FieldValue XsdOptional XsdNillable XsdAttributes TypeAnnotations CommaOrSemicolonOptional FieldComment
+   76 FieldIdentifier: .  [tok_binary, tok_bool, tok_double, tok_i16, tok_i32, tok_i64, tok_i8, tok_identifier, tok_list, tok_map, tok_optional, tok_required, tok_set, tok_slist, tok_string]
+
+    tok_binary        reduce using rule 76 (FieldIdentifier)
+    tok_bool          reduce using rule 76 (FieldIdentifier)
+    tok_double        reduce using rule 76 (FieldIdentifier)
+    tok_i16           reduce using rule 76 (FieldIdentifier)
+    tok_i32           reduce using rule 76 (FieldIdentifier)
+    tok_i64           reduce using rule 76 (FieldIdentifier)
+    tok_i8            reduce using rule 76 (FieldIdentifier)
+    tok_identifier    reduce using rule 76 (FieldIdentifier)
+    tok_int_constant  shift, and goto state 113
+    tok_list          reduce using rule 76 (FieldIdentifier)
+    tok_map           reduce using rule 76 (FieldIdentifier)
+    tok_optional      reduce using rule 76 (FieldIdentifier)
+    tok_required      reduce using rule 76 (FieldIdentifier)
+    tok_set           reduce using rule 76 (FieldIdentifier)
+    tok_slist         reduce using rule 76 (FieldIdentifier)
+    tok_string        reduce using rule 76 (FieldIdentifier)
+
+    FieldIdentifier  goto state 112
+
+state 112 // tok_xception tok_identifier '{' [tok_binary]
+
+   74 Field: CaptureDocText FieldIdentifier . FieldRequiredness FieldType FieldReference tok_identifier FieldValue XsdOptional XsdNillable XsdAttributes TypeAnnotations CommaOrSemicolonOptional FieldComment
+   81 FieldRequiredness: .  [tok_binary, tok_bool, tok_double, tok_i16, tok_i32, tok_i64, tok_i8, tok_identifier, tok_list, tok_map, tok_set, tok_slist, tok_string]
+
+    tok_binary      reduce using rule 81 (FieldRequiredness)
+    tok_bool        reduce using rule 81 (FieldRequiredness)
+    tok_double      reduce using rule 81 (FieldRequiredness)
+    tok_i16         reduce using rule 81 (FieldRequiredness)
+    tok_i32         reduce using rule 81 (FieldRequiredness)
+    tok_i64         reduce using rule 81 (FieldRequiredness)
+    tok_i8          reduce using rule 81 (FieldRequiredness)
+    tok_identifier  reduce using rule 81 (FieldRequiredness)
+    tok_list        reduce using rule 81 (FieldRequiredness)
+    tok_map         reduce using rule 81 (FieldRequiredness)
+    tok_optional    shift, and goto state 117
+    tok_required    shift, and goto state 116
+    tok_set         reduce using rule 81 (FieldRequiredness)
+    tok_slist       reduce using rule 81 (FieldRequiredness)
+    tok_string      reduce using rule 81 (FieldRequiredness)
+
+    FieldRequiredness  goto state 115
+
+state 113 // tok_xception tok_identifier '{' tok_int_constant
+
+   75 FieldIdentifier: tok_int_constant . ':'
+
+    ':'  shift, and goto state 114
+
+state 114 // tok_xception tok_identifier '{' tok_int_constant ':'
+
+   75 FieldIdentifier: tok_int_constant ':' .  [tok_binary, tok_bool, tok_double, tok_i16, tok_i32, tok_i64, tok_i8, tok_identifier, tok_list, tok_map, tok_optional, tok_required, tok_set, tok_slist, tok_string]
+
+    tok_binary      reduce using rule 75 (FieldIdentifier)
+    tok_bool        reduce using rule 75 (FieldIdentifier)
+    tok_double      reduce using rule 75 (FieldIdentifier)
+    tok_i16         reduce using rule 75 (FieldIdentifier)
+    tok_i32         reduce using rule 75 (FieldIdentifier)
+    tok_i64         reduce using rule 75 (FieldIdentifier)
+    tok_i8          reduce using rule 75 (FieldIdentifier)
+    tok_identifier  reduce using rule 75 (FieldIdentifier)
+    tok_list        reduce using rule 75 (FieldIdentifier)
+    tok_map         reduce using rule 75 (FieldIdentifier)
+    tok_optional    reduce using rule 75 (FieldIdentifier)
+    tok_required    reduce using rule 75 (FieldIdentifier)
+    tok_set         reduce using rule 75 (FieldIdentifier)
+    tok_slist       reduce using rule 75 (FieldIdentifier)
+    tok_string      reduce using rule 75 (FieldIdentifier)
+
+state 115 // tok_xception tok_identifier '{' [tok_binary]
+
+   74 Field: CaptureDocText FieldIdentifier FieldRequiredness . FieldType FieldReference tok_identifier FieldValue XsdOptional XsdNillable XsdAttributes TypeAnnotations CommaOrSemicolonOptional FieldComment
+
+    tok_binary      shift, and goto state 73
+    tok_bool        shift, and goto state 75
+    tok_double      shift, and goto state 80
+    tok_i16         shift, and goto state 77
+    tok_i32         shift, and goto state 78
+    tok_i64         shift, and goto state 79
+    tok_i8          shift, and goto state 76
+    tok_identifier  shift, and goto state 68
+    tok_list        shift, and goto state 87
+    tok_map         shift, and goto state 85
+    tok_set         shift, and goto state 86
+    tok_slist       shift, and goto state 74
+    tok_string      shift, and goto state 72
+
+    BaseType             goto state 69
+    ContainerType        goto state 70
+    FieldType            goto state 118
+    ListType             goto state 84
+    MapType              goto state 82
+    SetType              goto state 83
+    SimpleBaseType       goto state 71
+    SimpleContainerType  goto state 81
+
+state 116 // tok_xception tok_identifier '{' tok_required
+
+   79 FieldRequiredness: tok_required .  [tok_binary, tok_bool, tok_double, tok_i16, tok_i32, tok_i64, tok_i8, tok_identifier, tok_list, tok_map, tok_set, tok_slist, tok_string]
+
+    tok_binary      reduce using rule 79 (FieldRequiredness)
+    tok_bool        reduce using rule 79 (FieldRequiredness)
+    tok_double      reduce using rule 79 (FieldRequiredness)
+    tok_i16         reduce using rule 79 (FieldRequiredness)
+    tok_i32         reduce using rule 79 (FieldRequiredness)
+    tok_i64         reduce using rule 79 (FieldRequiredness)
+    tok_i8          reduce using rule 79 (FieldRequiredness)
+    tok_identifier  reduce using rule 79 (FieldRequiredness)
+    tok_list        reduce using rule 79 (FieldRequiredness)
+    tok_map         reduce using rule 79 (FieldRequiredness)
+    tok_set         reduce using rule 79 (FieldRequiredness)
+    tok_slist       reduce using rule 79 (FieldRequiredness)
+    tok_string      reduce using rule 79 (FieldRequiredness)
+
+state 117 // tok_xception tok_identifier '{' tok_optional
+
+   80 FieldRequiredness: tok_optional .  [tok_binary, tok_bool, tok_double, tok_i16, tok_i32, tok_i64, tok_i8, tok_identifier, tok_list, tok_map, tok_set, tok_slist, tok_string]
+
+    tok_binary      reduce using rule 80 (FieldRequiredness)
+    tok_bool        reduce using rule 80 (FieldRequiredness)
+    tok_double      reduce using rule 80 (FieldRequiredness)
+    tok_i16         reduce using rule 80 (FieldRequiredness)
+    tok_i32         reduce using rule 80 (FieldRequiredness)
+    tok_i64         reduce using rule 80 (FieldRequiredness)
+    tok_i8          reduce using rule 80 (FieldRequiredness)
+    tok_identifier  reduce using rule 80 (FieldRequiredness)
+    tok_list        reduce using rule 80 (FieldRequiredness)
+    tok_map         reduce using rule 80 (FieldRequiredness)
+    tok_set         reduce using rule 80 (FieldRequiredness)
+    tok_slist       reduce using rule 80 (FieldRequiredness)
+    tok_string      reduce using rule 80 (FieldRequiredness)
+
+state 118 // tok_xception tok_identifier '{' tok_binary [tok_identifier]
+
+   74 Field: CaptureDocText FieldIdentifier FieldRequiredness FieldType . FieldReference tok_identifier FieldValue XsdOptional XsdNillable XsdAttributes TypeAnnotations CommaOrSemicolonOptional FieldComment
+   78 FieldReference: .  [tok_identifier]
+
+    tok_identifier  reduce using rule 78 (FieldReference)
+    tok_reference   shift, and goto state 120
+
+    FieldReference  goto state 119
+
+state 119 // tok_xception tok_identifier '{' tok_binary [tok_identifier]
+
+   74 Field: CaptureDocText FieldIdentifier FieldRequiredness FieldType FieldReference . tok_identifier FieldValue XsdOptional XsdNillable XsdAttributes TypeAnnotations CommaOrSemicolonOptional FieldComment
+
+    tok_identifier  shift, and goto state 121
+
+state 120 // tok_xception tok_identifier '{' tok_binary tok_reference
+
+   77 FieldReference: tok_reference .  [tok_identifier]
+
+    tok_identifier  reduce using rule 77 (FieldReference)
+
+state 121 // tok_xception tok_identifier '{' tok_binary tok_identifier
+
+   74 Field: CaptureDocText FieldIdentifier FieldRequiredness FieldType FieldReference tok_identifier . FieldValue XsdOptional XsdNillable XsdAttributes TypeAnnotations CommaOrSemicolonOptional FieldComment
+   83 FieldValue: .  ['(', ')', ',', ';', '}', tok_binary, tok_bool, tok_double, tok_fieldcomment, tok_i16, tok_i32, tok_i64, tok_i8, tok_identifier, tok_int_constant, tok_list, tok_map, tok_optional, tok_required, tok_set, tok_slist, tok_string, tok_xsd_attrs, tok_xsd_nillable, tok_xsd_optional]
+
+    '('               reduce using rule 83 (FieldValue)
+    ')'               reduce using rule 83 (FieldValue)
+    ','               reduce using rule 83 (FieldValue)
+    ';'               reduce using rule 83 (FieldValue)
+    '='               shift, and goto state 123
+    '}'               reduce using rule 83 (FieldValue)
+    tok_binary        reduce using rule 83 (FieldValue)
+    tok_bool          reduce using rule 83 (FieldValue)
+    tok_double        reduce using rule 83 (FieldValue)
+    tok_fieldcomment  reduce using rule 83 (FieldValue)
+    tok_i16           reduce using rule 83 (FieldValue)
+    tok_i32           reduce using rule 83 (FieldValue)
+    tok_i64           reduce using rule 83 (FieldValue)
+    tok_i8            reduce using rule 83 (FieldValue)
+    tok_identifier    reduce using rule 83 (FieldValue)
+    tok_int_constant  reduce using rule 83 (FieldValue)
+    tok_list          reduce using rule 83 (FieldValue)
+    tok_map           reduce using rule 83 (FieldValue)
+    tok_optional      reduce using rule 83 (FieldValue)
+    tok_required      reduce using rule 83 (FieldValue)
+    tok_set           reduce using rule 83 (FieldValue)
+    tok_slist         reduce using rule 83 (FieldValue)
+    tok_string        reduce using rule 83 (FieldValue)
+    tok_xsd_attrs     reduce using rule 83 (FieldValue)
+    tok_xsd_nillable  reduce using rule 83 (FieldValue)
+    tok_xsd_optional  reduce using rule 83 (FieldValue)
+
+    FieldValue  goto state 122
+
+state 122 // tok_xception tok_identifier '{' tok_binary tok_identifier ['(']
+
+   74 Field: CaptureDocText FieldIdentifier FieldRequiredness FieldType FieldReference tok_identifier FieldValue . XsdOptional XsdNillable XsdAttributes TypeAnnotations CommaOrSemicolonOptional FieldComment
+   54 XsdOptional: .  ['(', ')', ',', ';', '}', tok_binary, tok_bool, tok_double, tok_fieldcomment, tok_i16, tok_i32, tok_i64, tok_i8, tok_identifier, tok_int_constant, tok_list, tok_map, tok_optional, tok_required, tok_set, tok_slist, tok_string, tok_xsd_attrs, tok_xsd_nillable]
+
+    '('               reduce using rule 54 (XsdOptional)
+    ')'               reduce using rule 54 (XsdOptional)
+    ','               reduce using rule 54 (XsdOptional)
+    ';'               reduce using rule 54 (XsdOptional)
+    '}'               reduce using rule 54 (XsdOptional)
+    tok_binary        reduce using rule 54 (XsdOptional)
+    tok_bool          reduce using rule 54 (XsdOptional)
+    tok_double        reduce using rule 54 (XsdOptional)
+    tok_fieldcomment  reduce using rule 54 (XsdOptional)
+    tok_i16           reduce using rule 54 (XsdOptional)
+    tok_i32           reduce using rule 54 (XsdOptional)
+    tok_i64           reduce using rule 54 (XsdOptional)
+    tok_i8            reduce using rule 54 (XsdOptional)
+    tok_identifier    reduce using rule 54 (XsdOptional)
+    tok_int_constant  reduce using rule 54 (XsdOptional)
+    tok_list          reduce using rule 54 (XsdOptional)
+    tok_map           reduce using rule 54 (XsdOptional)
+    tok_optional      reduce using rule 54 (XsdOptional)
+    tok_required      reduce using rule 54 (XsdOptional)
+    tok_set           reduce using rule 54 (XsdOptional)
+    tok_slist         reduce using rule 54 (XsdOptional)
+    tok_string        reduce using rule 54 (XsdOptional)
+    tok_xsd_attrs     reduce using rule 54 (XsdOptional)
+    tok_xsd_nillable  reduce using rule 54 (XsdOptional)
+    tok_xsd_optional  shift, and goto state 143
+
+    XsdOptional  goto state 144
+
+state 123 // tok_xception tok_identifier '{' tok_binary tok_identifier '='
+
+   82 FieldValue: '=' . ConstValue
+
+    '['               shift, and goto state 130
+    '{'               shift, and goto state 131
+    tok_dub_constant  shift, and goto state 125
+    tok_identifier    shift, and goto state 127
+    tok_int_constant  shift, and goto state 124
+    tok_literal       shift, and goto state 126
+
+    ConstList   goto state 128
+    ConstMap    goto state 129
+    ConstValue  goto state 132
+
+state 124 // tok_const tok_binary tok_identifier '=' tok_int_constant
+
+   36 ConstValue: tok_int_constant .  [$end, '(', ')', ',', ':', ';', '[', ']', '{', '}', tok_binary, tok_bool, tok_const, tok_double, tok_dub_constant, tok_enum, tok_fieldcomment, tok_i16, tok_i32, tok_i64, tok_i8, tok_identifier, tok_int_constant, tok_list, tok_literal, tok_lobattr, tok_map, tok_optional, tok_required, tok_senum, tok_service, tok_set, tok_slist, tok_string, tok_struct, tok_typedef, tok_union, tok_xception, tok_xsd_attrs, tok_xsd_nillable, tok_xsd_optional]
+
+    $end              reduce using rule 36 (ConstValue)
+    '('               reduce using rule 36 (ConstValue)
+    ')'               reduce using rule 36 (ConstValue)
+    ','               reduce using rule 36 (ConstValue)
+    ':'               reduce using rule 36 (ConstValue)
+    ';'               reduce using rule 36 (ConstValue)
+    '['               reduce using rule 36 (ConstValue)
+    ']'               reduce using rule 36 (ConstValue)
+    '{'               reduce using rule 36 (ConstValue)
+    '}'               reduce using rule 36 (ConstValue)
+    tok_binary        reduce using rule 36 (ConstValue)
+    tok_bool          reduce using rule 36 (ConstValue)
+    tok_const         reduce using rule 36 (ConstValue)
+    tok_double        reduce using rule 36 (ConstValue)
+    tok_dub_constant  reduce using rule 36 (ConstValue)
+    tok_enum          reduce using rule 36 (ConstValue)
+    tok_fieldcomment  reduce using rule 36 (ConstValue)
+    tok_i16           reduce using rule 36 (ConstValue)
+    tok_i32           reduce using rule 36 (ConstValue)
+    tok_i64           reduce using rule 36 (ConstValue)
+    tok_i8            reduce using rule 36 (ConstValue)
+    tok_identifier    reduce using rule 36 (ConstValue)
+    tok_int_constant  reduce using rule 36 (ConstValue)
+    tok_list          reduce using rule 36 (ConstValue)
+    tok_literal       reduce using rule 36 (ConstValue)
+    tok_lobattr       reduce using rule 36 (ConstValue)
+    tok_map           reduce using rule 36 (ConstValue)
+    tok_optional      reduce using rule 36 (ConstValue)
+    tok_required      reduce using rule 36 (ConstValue)
+    tok_senum         reduce using rule 36 (ConstValue)
+    tok_service       reduce using rule 36 (ConstValue)
+    tok_set           reduce using rule 36 (ConstValue)
+    tok_slist         reduce using rule 36 (ConstValue)
+    tok_string        reduce using rule 36 (ConstValue)
+    tok_struct        reduce using rule 36 (ConstValue)
+    tok_typedef       reduce using rule 36 (ConstValue)
+    tok_union         reduce using rule 36 (ConstValue)
+    tok_xception      reduce using rule 36 (ConstValue)
+    tok_xsd_attrs     reduce using rule 36 (ConstValue)
+    tok_xsd_nillable  reduce using rule 36 (ConstValue)
+    tok_xsd_optional  reduce using rule 36 (ConstValue)
+
+state 125 // tok_const tok_binary tok_identifier '=' tok_dub_constant
+
+   37 ConstValue: tok_dub_constant .  [$end, '(', ')', ',', ':', ';', '[', ']', '{', '}', tok_binary, tok_bool, tok_const, tok_double, tok_dub_constant, tok_enum, tok_fieldcomment, tok_i16, tok_i32, tok_i64, tok_i8, tok_identifier, tok_int_constant, tok_list, tok_literal, tok_lobattr, tok_map, tok_optional, tok_required, tok_senum, tok_service, tok_set, tok_slist, tok_string, tok_struct, tok_typedef, tok_union, tok_xception, tok_xsd_attrs, tok_xsd_nillable, tok_xsd_optional]
+
+    $end              reduce using rule 37 (ConstValue)
+    '('               reduce using rule 37 (ConstValue)
+    ')'               reduce using rule 37 (ConstValue)
+    ','               reduce using rule 37 (ConstValue)
+    ':'               reduce using rule 37 (ConstValue)
+    ';'               reduce using rule 37 (ConstValue)
+    '['               reduce using rule 37 (ConstValue)
+    ']'               reduce using rule 37 (ConstValue)
+    '{'               reduce using rule 37 (ConstValue)
+    '}'               reduce using rule 37 (ConstValue)
+    tok_binary        reduce using rule 37 (ConstValue)
+    tok_bool          reduce using rule 37 (ConstValue)
+    tok_const         reduce using rule 37 (ConstValue)
+    tok_double        reduce using rule 37 (ConstValue)
+    tok_dub_constant  reduce using rule 37 (ConstValue)
+    tok_enum          reduce using rule 37 (ConstValue)
+    tok_fieldcomment  reduce using rule 37 (ConstValue)
+    tok_i16           reduce using rule 37 (ConstValue)
+    tok_i32           reduce using rule 37 (ConstValue)
+    tok_i64           reduce using rule 37 (ConstValue)
+    tok_i8            reduce using rule 37 (ConstValue)
+    tok_identifier    reduce using rule 37 (ConstValue)
+    tok_int_constant  reduce using rule 37 (ConstValue)
+    tok_list          reduce using rule 37 (ConstValue)
+    tok_literal       reduce using rule 37 (ConstValue)
+    tok_lobattr       reduce using rule 37 (ConstValue)
+    tok_map           reduce using rule 37 (ConstValue)
+    tok_optional      reduce using rule 37 (ConstValue)
+    tok_required      reduce using rule 37 (ConstValue)
+    tok_senum         reduce using rule 37 (ConstValue)
+    tok_service       reduce using rule 37 (ConstValue)
+    tok_set           reduce using rule 37 (ConstValue)
+    tok_slist         reduce using rule 37 (ConstValue)
+    tok_string        reduce using rule 37 (ConstValue)
+    tok_struct        reduce using rule 37 (ConstValue)
+    tok_typedef       reduce using rule 37 (ConstValue)
+    tok_union         reduce using rule 37 (ConstValue)
+    tok_xception      reduce using rule 37 (ConstValue)
+    tok_xsd_attrs     reduce using rule 37 (ConstValue)
+    tok_xsd_nillable  reduce using rule 37 (ConstValue)
+    tok_xsd_optional  reduce using rule 37 (ConstValue)
+
+state 126 // tok_const tok_binary tok_identifier '=' tok_literal
+
+   38 ConstValue: tok_literal .  [$end, '(', ')', ',', ':', ';', '[', ']', '{', '}', tok_binary, tok_bool, tok_const, tok_double, tok_dub_constant, tok_enum, tok_fieldcomment, tok_i16, tok_i32, tok_i64, tok_i8, tok_identifier, tok_int_constant, tok_list, tok_literal, tok_lobattr, tok_map, tok_optional, tok_required, tok_senum, tok_service, tok_set, tok_slist, tok_string, tok_struct, tok_typedef, tok_union, tok_xception, tok_xsd_attrs, tok_xsd_nillable, tok_xsd_optional]
+
+    $end              reduce using rule 38 (ConstValue)
+    '('               reduce using rule 38 (ConstValue)
+    ')'               reduce using rule 38 (ConstValue)
+    ','               reduce using rule 38 (ConstValue)
+    ':'               reduce using rule 38 (ConstValue)
+    ';'               reduce using rule 38 (ConstValue)
+    '['               reduce using rule 38 (ConstValue)
+    ']'               reduce using rule 38 (ConstValue)
+    '{'               reduce using rule 38 (ConstValue)
+    '}'               reduce using rule 38 (ConstValue)
+    tok_binary        reduce using rule 38 (ConstValue)
+    tok_bool          reduce using rule 38 (ConstValue)
+    tok_const         reduce using rule 38 (ConstValue)
+    tok_double        reduce using rule 38 (ConstValue)
+    tok_dub_constant  reduce using rule 38 (ConstValue)
+    tok_enum          reduce using rule 38 (ConstValue)
+    tok_fieldcomment  reduce using rule 38 (ConstValue)
+    tok_i16           reduce using rule 38 (ConstValue)
+    tok_i32           reduce using rule 38 (ConstValue)
+    tok_i64           reduce using rule 38 (ConstValue)
+    tok_i8            reduce using rule 38 (ConstValue)
+    tok_identifier    reduce using rule 38 (ConstValue)
+    tok_int_constant  reduce using rule 38 (ConstValue)
+    tok_list          reduce using rule 38 (ConstValue)
+    tok_literal       reduce using rule 38 (ConstValue)
+    tok_lobattr       reduce using rule 38 (ConstValue)
+    tok_map           reduce using rule 38 (ConstValue)
+    tok_optional      reduce using rule 38 (ConstValue)
+    tok_required      reduce using rule 38 (ConstValue)
+    tok_senum         reduce using rule 38 (ConstValue)
+    tok_service       reduce using rule 38 (ConstValue)
+    tok_set           reduce using rule 38 (ConstValue)
+    tok_slist         reduce using rule 38 (ConstValue)
+    tok_string        reduce using rule 38 (ConstValue)
+    tok_struct        reduce using rule 38 (ConstValue)
+    tok_typedef       reduce using rule 38 (ConstValue)
+    tok_union         reduce using rule 38 (ConstValue)
+    tok_xception      reduce using rule 38 (ConstValue)
+    tok_xsd_attrs     reduce using rule 38 (ConstValue)
+    tok_xsd_nillable  reduce using rule 38 (ConstValue)
+    tok_xsd_optional  reduce using rule 38 (ConstValue)
+
+state 127 // tok_const tok_binary tok_identifier '=' tok_identifier
+
+   39 ConstValue: tok_identifier .  [$end, '(', ')', ',', ':', ';', '[', ']', '{', '}', tok_binary, tok_bool, tok_const, tok_double, tok_dub_constant, tok_enum, tok_fieldcomment, tok_i16, tok_i32, tok_i64, tok_i8, tok_identifier, tok_int_constant, tok_list, tok_literal, tok_lobattr, tok_map, tok_optional, tok_required, tok_senum, tok_service, tok_set, tok_slist, tok_string, tok_struct, tok_typedef, tok_union, tok_xception, tok_xsd_attrs, tok_xsd_nillable, tok_xsd_optional]
+
+    $end              reduce using rule 39 (ConstValue)
+    '('               reduce using rule 39 (ConstValue)
+    ')'               reduce using rule 39 (ConstValue)
+    ','               reduce using rule 39 (ConstValue)
+    ':'               reduce using rule 39 (ConstValue)
+    ';'               reduce using rule 39 (ConstValue)
+    '['               reduce using rule 39 (ConstValue)
+    ']'               reduce using rule 39 (ConstValue)
+    '{'               reduce using rule 39 (ConstValue)
+    '}'               reduce using rule 39 (ConstValue)
+    tok_binary        reduce using rule 39 (ConstValue)
+    tok_bool          reduce using rule 39 (ConstValue)
+    tok_const         reduce using rule 39 (ConstValue)
+    tok_double        reduce using rule 39 (ConstValue)
+    tok_dub_constant  reduce using rule 39 (ConstValue)
+    tok_enum          reduce using rule 39 (ConstValue)
+    tok_fieldcomment  reduce using rule 39 (ConstValue)
+    tok_i16           reduce using rule 39 (ConstValue)
+    tok_i32           reduce using rule 39 (ConstValue)
+    tok_i64           reduce using rule 39 (ConstValue)
+    tok_i8            reduce using rule 39 (ConstValue)
+    tok_identifier    reduce using rule 39 (ConstValue)
+    tok_int_constant  reduce using rule 39 (ConstValue)
+    tok_list          reduce using rule 39 (ConstValue)
+    tok_literal       reduce using rule 39 (ConstValue)
+    tok_lobattr       reduce using rule 39 (ConstValue)
+    tok_map           reduce using rule 39 (ConstValue)
+    tok_optional      reduce using rule 39 (ConstValue)
+    tok_required      reduce using rule 39 (ConstValue)
+    tok_senum         reduce using rule 39 (ConstValue)
+    tok_service       reduce using rule 39 (ConstValue)
+    tok_set           reduce using rule 39 (ConstValue)
+    tok_slist         reduce using rule 39 (ConstValue)
+    tok_string        reduce using rule 39 (ConstValue)
+    tok_struct        reduce using rule 39 (ConstValue)
+    tok_typedef       reduce using rule 39 (ConstValue)
+    tok_union         reduce using rule 39 (ConstValue)
+    tok_xception      reduce using rule 39 (ConstValue)
+    tok_xsd_attrs     reduce using rule 39 (ConstValue)
+    tok_xsd_nillable  reduce using rule 39 (ConstValue)
+    tok_xsd_optional  reduce using rule 39 (ConstValue)
+
+state 128 // tok_const tok_binary tok_identifier '=' '[' ']' [$end]
+
+   40 ConstValue: ConstList .  [$end, '(', ')', ',', ':', ';', '[', ']', '{', '}', tok_binary, tok_bool, tok_const, tok_double, tok_dub_constant, tok_enum, tok_fieldcomment, tok_i16, tok_i32, tok_i64, tok_i8, tok_identifier, tok_int_constant, tok_list, tok_literal, tok_lobattr, tok_map, tok_optional, tok_required, tok_senum, tok_service, tok_set, tok_slist, tok_string, tok_struct, tok_typedef, tok_union, tok_xception, tok_xsd_attrs, tok_xsd_nillable, tok_xsd_optional]
+
+    $end              reduce using rule 40 (ConstValue)
+    '('               reduce using rule 40 (ConstValue)
+    ')'               reduce using rule 40 (ConstValue)
+    ','               reduce using rule 40 (ConstValue)
+    ':'               reduce using rule 40 (ConstValue)
+    ';'               reduce using rule 40 (ConstValue)
+    '['               reduce using rule 40 (ConstValue)
+    ']'               reduce using rule 40 (ConstValue)
+    '{'               reduce using rule 40 (ConstValue)
+    '}'               reduce using rule 40 (ConstValue)
+    tok_binary        reduce using rule 40 (ConstValue)
+    tok_bool          reduce using rule 40 (ConstValue)
+    tok_const         reduce using rule 40 (ConstValue)
+    tok_double        reduce using rule 40 (ConstValue)
+    tok_dub_constant  reduce using rule 40 (ConstValue)
+    tok_enum          reduce using rule 40 (ConstValue)
+    tok_fieldcomment  reduce using rule 40 (ConstValue)
+    tok_i16           reduce using rule 40 (ConstValue)
+    tok_i32           reduce using rule 40 (ConstValue)
+    tok_i64           reduce using rule 40 (ConstValue)
+    tok_i8            reduce using rule 40 (ConstValue)
+    tok_identifier    reduce using rule 40 (ConstValue)
+    tok_int_constant  reduce using rule 40 (ConstValue)
+    tok_list          reduce using rule 40 (ConstValue)
+    tok_literal       reduce using rule 40 (ConstValue)
+    tok_lobattr       reduce using rule 40 (ConstValue)
+    tok_map           reduce using rule 40 (ConstValue)
+    tok_optional      reduce using rule 40 (ConstValue)
+    tok_required      reduce using rule 40 (ConstValue)
+    tok_senum         reduce using rule 40 (ConstValue)
+    tok_service       reduce using rule 40 (ConstValue)
+    tok_set           reduce using rule 40 (ConstValue)
+    tok_slist         reduce using rule 40 (ConstValue)
+    tok_string        reduce using rule 40 (ConstValue)
+    tok_struct        reduce using rule 40 (ConstValue)
+    tok_typedef       reduce using rule 40 (ConstValue)
+    tok_union         reduce using rule 40 (ConstValue)
+    tok_xception      reduce using rule 40 (ConstValue)
+    tok_xsd_attrs     reduce using rule 40 (ConstValue)
+    tok_xsd_nillable  reduce using rule 40 (ConstValue)
+    tok_xsd_optional  reduce using rule 40 (ConstValue)
+
+state 129 // tok_const tok_binary tok_identifier '=' '{' '}' [$end]
+
+   41 ConstValue: ConstMap .  [$end, '(', ')', ',', ':', ';', '[', ']', '{', '}', tok_binary, tok_bool, tok_const, tok_double, tok_dub_constant, tok_enum, tok_fieldcomment, tok_i16, tok_i32, tok_i64, tok_i8, tok_identifier, tok_int_constant, tok_list, tok_literal, tok_lobattr, tok_map, tok_optional, tok_required, tok_senum, tok_service, tok_set, tok_slist, tok_string, tok_struct, tok_typedef, tok_union, tok_xception, tok_xsd_attrs, tok_xsd_nillable, tok_xsd_optional]
+
+    $end              reduce using rule 41 (ConstValue)
+    '('               reduce using rule 41 (ConstValue)
+    ')'               reduce using rule 41 (ConstValue)
+    ','               reduce using rule 41 (ConstValue)
+    ':'               reduce using rule 41 (ConstValue)
+    ';'               reduce using rule 41 (ConstValue)
+    '['               reduce using rule 41 (ConstValue)
+    ']'               reduce using rule 41 (ConstValue)
+    '{'               reduce using rule 41 (ConstValue)
+    '}'               reduce using rule 41 (ConstValue)
+    tok_binary        reduce using rule 41 (ConstValue)
+    tok_bool          reduce using rule 41 (ConstValue)
+    tok_const         reduce using rule 41 (ConstValue)
+    tok_double        reduce using rule 41 (ConstValue)
+    tok_dub_constant  reduce using rule 41 (ConstValue)
+    tok_enum          reduce using rule 41 (ConstValue)
+    tok_fieldcomment  reduce using rule 41 (ConstValue)
+    tok_i16           reduce using rule 41 (ConstValue)
+    tok_i32           reduce using rule 41 (ConstValue)
+    tok_i64           reduce using rule 41 (ConstValue)
+    tok_i8            reduce using rule 41 (ConstValue)
+    tok_identifier    reduce using rule 41 (ConstValue)
+    tok_int_constant  reduce using rule 41 (ConstValue)
+    tok_list          reduce using rule 41 (ConstValue)
+    tok_literal       reduce using rule 41 (ConstValue)
+    tok_lobattr       reduce using rule 41 (ConstValue)
+    tok_map           reduce using rule 41 (ConstValue)
+    tok_optional      reduce using rule 41 (ConstValue)
+    tok_required      reduce using rule 41 (ConstValue)
+    tok_senum         reduce using rule 41 (ConstValue)
+    tok_service       reduce using rule 41 (ConstValue)
+    tok_set           reduce using rule 41 (ConstValue)
+    tok_slist         reduce using rule 41 (ConstValue)
+    tok_string        reduce using rule 41 (ConstValue)
+    tok_struct        reduce using rule 41 (ConstValue)
+    tok_typedef       reduce using rule 41 (ConstValue)
+    tok_union         reduce using rule 41 (ConstValue)
+    tok_xception      reduce using rule 41 (ConstValue)
+    tok_xsd_attrs     reduce using rule 41 (ConstValue)
+    tok_xsd_nillable  reduce using rule 41 (ConstValue)
+    tok_xsd_optional  reduce using rule 41 (ConstValue)
+
+state 130 // tok_const tok_binary tok_identifier '=' '['
+
+   42 ConstList: '[' . ConstListContents ']'
+   44 ConstListContents: .  ['[', ']', '{', tok_dub_constant, tok_identifier, tok_int_constant, tok_literal]
+
+    '['               reduce using rule 44 (ConstListContents)
+    ']'               reduce using rule 44 (ConstListContents)
+    '{'               reduce using rule 44 (ConstListContents)
+    tok_dub_constant  reduce using rule 44 (ConstListContents)
+    tok_identifier    reduce using rule 44 (ConstListContents)
+    tok_int_constant  reduce using rule 44 (ConstListContents)
+    tok_literal       reduce using rule 44 (ConstListContents)
+
+    ConstListContents  goto state 139
+
+state 131 // tok_const tok_binary tok_identifier '=' '{'
+
+   45 ConstMap: '{' . ConstMapContents '}'
+   47 ConstMapContents: .  ['[', '{', '}', tok_dub_constant, tok_identifier, tok_int_constant, tok_literal]
+
+    '['               reduce using rule 47 (ConstMapContents)
+    '{'               reduce using rule 47 (ConstMapContents)
+    '}'               reduce using rule 47 (ConstMapContents)
+    tok_dub_constant  reduce using rule 47 (ConstMapContents)
+    tok_identifier    reduce using rule 47 (ConstMapContents)
+    tok_int_constant  reduce using rule 47 (ConstMapContents)
+    tok_literal       reduce using rule 47 (ConstMapContents)
+
+    ConstMapContents  goto state 133
+
+state 132 // tok_xception tok_identifier '{' tok_binary tok_identifier '=' tok_dub_constant ['(']
+
+   82 FieldValue: '=' ConstValue .  ['(', ')', ',', ';', '}', tok_binary, tok_bool, tok_double, tok_fieldcomment, tok_i16, tok_i32, tok_i64, tok_i8, tok_identifier, tok_int_constant, tok_list, tok_map, tok_optional, tok_required, tok_set, tok_slist, tok_string, tok_xsd_attrs, tok_xsd_nillable, tok_xsd_optional]
+
+    '('               reduce using rule 82 (FieldValue)
+    ')'               reduce using rule 82 (FieldValue)
+    ','               reduce using rule 82 (FieldValue)
+    ';'               reduce using rule 82 (FieldValue)
+    '}'               reduce using rule 82 (FieldValue)
+    tok_binary        reduce using rule 82 (FieldValue)
+    tok_bool          reduce using rule 82 (FieldValue)
+    tok_double        reduce using rule 82 (FieldValue)
+    tok_fieldcomment  reduce using rule 82 (FieldValue)
+    tok_i16           reduce using rule 82 (FieldValue)
+    tok_i32           reduce using rule 82 (FieldValue)
+    tok_i64           reduce using rule 82 (FieldValue)
+    tok_i8            reduce using rule 82 (FieldValue)
+    tok_identifier    reduce using rule 82 (FieldValue)
+    tok_int_constant  reduce using rule 82 (FieldValue)
+    tok_list          reduce using rule 82 (FieldValue)
+    tok_map           reduce using rule 82 (FieldValue)
+    tok_optional      reduce using rule 82 (FieldValue)
+    tok_required      reduce using rule 82 (FieldValue)
+    tok_set           reduce using rule 82 (FieldValue)
+    tok_slist         reduce using rule 82 (FieldValue)
+    tok_string        reduce using rule 82 (FieldValue)
+    tok_xsd_attrs     reduce using rule 82 (FieldValue)
+    tok_xsd_nillable  reduce using rule 82 (FieldValue)
+    tok_xsd_optional  reduce using rule 82 (FieldValue)
+
+state 133 // tok_const tok_binary tok_identifier '=' '{' ['[']
+
+   45 ConstMap: '{' ConstMapContents . '}'
+   46 ConstMapContents: ConstMapContents . ConstValue ':' ConstValue CommaOrSemicolonOptional
+
+    '['               shift, and goto state 130
+    '{'               shift, and goto state 131
+    '}'               shift, and goto state 134
+    tok_dub_constant  shift, and goto state 125
+    tok_identifier    shift, and goto state 127
+    tok_int_constant  shift, and goto state 124
+    tok_literal       shift, and goto state 126
+
+    ConstList   goto state 128
+    ConstMap    goto state 129
+    ConstValue  goto state 135
+
+state 134 // tok_const tok_binary tok_identifier '=' '{' '}'
+
+   45 ConstMap: '{' ConstMapContents '}' .  [$end, '(', ')', ',', ':', ';', '[', ']', '{', '}', tok_binary, tok_bool, tok_const, tok_double, tok_dub_constant, tok_enum, tok_fieldcomment, tok_i16, tok_i32, tok_i64, tok_i8, tok_identifier, tok_int_constant, tok_list, tok_literal, tok_lobattr, tok_map, tok_optional, tok_required, tok_senum, tok_service, tok_set, tok_slist, tok_string, tok_struct, tok_typedef, tok_union, tok_xception, tok_xsd_attrs, tok_xsd_nillable, tok_xsd_optional]
+
+    $end              reduce using rule 45 (ConstMap)
+    '('               reduce using rule 45 (ConstMap)
+    ')'               reduce using rule 45 (ConstMap)
+    ','               reduce using rule 45 (ConstMap)
+    ':'               reduce using rule 45 (ConstMap)
+    ';'               reduce using rule 45 (ConstMap)
+    '['               reduce using rule 45 (ConstMap)
+    ']'               reduce using rule 45 (ConstMap)
+    '{'               reduce using rule 45 (ConstMap)
+    '}'               reduce using rule 45 (ConstMap)
+    tok_binary        reduce using rule 45 (ConstMap)
+    tok_bool          reduce using rule 45 (ConstMap)
+    tok_const         reduce using rule 45 (ConstMap)
+    tok_double        reduce using rule 45 (ConstMap)
+    tok_dub_constant  reduce using rule 45 (ConstMap)
+    tok_enum          reduce using rule 45 (ConstMap)
+    tok_fieldcomment  reduce using rule 45 (ConstMap)
+    tok_i16           reduce using rule 45 (ConstMap)
+    tok_i32           reduce using rule 45 (ConstMap)
+    tok_i64           reduce using rule 45 (ConstMap)
+    tok_i8            reduce using rule 45 (ConstMap)
+    tok_identifier    reduce using rule 45 (ConstMap)
+    tok_int_constant  reduce using rule 45 (ConstMap)
+    tok_list          reduce using rule 45 (ConstMap)
+    tok_literal       reduce using rule 45 (ConstMap)
+    tok_lobattr       reduce using rule 45 (ConstMap)
+    tok_map           reduce using rule 45 (ConstMap)
+    tok_optional      reduce using rule 45 (ConstMap)
+    tok_required      reduce using rule 45 (ConstMap)
+    tok_senum         reduce using rule 45 (ConstMap)
+    tok_service       reduce using rule 45 (ConstMap)
+    tok_set           reduce using rule 45 (ConstMap)
+    tok_slist         reduce using rule 45 (ConstMap)
+    tok_string        reduce using rule 45 (ConstMap)
+    tok_struct        reduce using rule 45 (ConstMap)
+    tok_typedef       reduce using rule 45 (ConstMap)
+    tok_union         reduce using rule 45 (ConstMap)
+    tok_xception      reduce using rule 45 (ConstMap)
+    tok_xsd_attrs     reduce using rule 45 (ConstMap)
+    tok_xsd_nillable  reduce using rule 45 (ConstMap)
+    tok_xsd_optional  reduce using rule 45 (ConstMap)
+
+state 135 // tok_const tok_binary tok_identifier '=' '{' tok_dub_constant [':']
+
+   46 ConstMapContents: ConstMapContents ConstValue . ':' ConstValue CommaOrSemicolonOptional
+
+    ':'  shift, and goto state 136
+
+state 136 // tok_const tok_binary tok_identifier '=' '{' tok_dub_constant ':'
+
+   46 ConstMapContents: ConstMapContents ConstValue ':' . ConstValue CommaOrSemicolonOptional
+
+    '['               shift, and goto state 130
+    '{'               shift, and goto state 131
+    tok_dub_constant  shift, and goto state 125
+    tok_identifier    shift, and goto state 127
+    tok_int_constant  shift, and goto state 124
+    tok_literal       shift, and goto state 126
+
+    ConstList   goto state 128
+    ConstMap    goto state 129
+    ConstValue  goto state 137
+
+state 137 // tok_const tok_binary tok_identifier '=' '{' tok_dub_constant ':' tok_dub_constant [',']
+
+   46 ConstMapContents: ConstMapContents ConstValue ':' ConstValue . CommaOrSemicolonOptional
+   23 CommaOrSemicolonOptional: .  ['[', '{', '}', tok_dub_constant, tok_identifier, tok_int_constant, tok_literal]
+
+    ','               shift, and goto state 25
+    ';'               shift, and goto state 26
+    '['               reduce using rule 23 (CommaOrSemicolonOptional)
+    '{'               reduce using rule 23 (CommaOrSemicolonOptional)
+    '}'               reduce using rule 23 (CommaOrSemicolonOptional)
+    tok_dub_constant  reduce using rule 23 (CommaOrSemicolonOptional)
+    tok_identifier    reduce using rule 23 (CommaOrSemicolonOptional)
+    tok_int_constant  reduce using rule 23 (CommaOrSemicolonOptional)
+    tok_literal       reduce using rule 23 (CommaOrSemicolonOptional)
+
+    CommaOrSemicolonOptional  goto state 138
+
+state 138 // tok_const tok_binary tok_identifier '=' '{' tok_dub_constant ':' tok_dub_constant ['[']
+
+   46 ConstMapContents: ConstMapContents ConstValue ':' ConstValue CommaOrSemicolonOptional .  ['[', '{', '}', tok_dub_constant, tok_identifier, tok_int_constant, tok_literal]
+
+    '['               reduce using rule 46 (ConstMapContents)
+    '{'               reduce using rule 46 (ConstMapContents)
+    '}'               reduce using rule 46 (ConstMapContents)
+    tok_dub_constant  reduce using rule 46 (ConstMapContents)
+    tok_identifier    reduce using rule 46 (ConstMapContents)
+    tok_int_constant  reduce using rule 46 (ConstMapContents)
+    tok_literal       reduce using rule 46 (ConstMapContents)
+
+state 139 // tok_const tok_binary tok_identifier '=' '[' ['[']
+
+   42 ConstList: '[' ConstListContents . ']'
+   43 ConstListContents: ConstListContents . ConstValue CommaOrSemicolonOptional
+
+    '['               shift, and goto state 130
+    ']'               shift, and goto state 140
+    '{'               shift, and goto state 131
+    tok_dub_constant  shift, and goto state 125
+    tok_identifier    shift, and goto state 127
+    tok_int_constant  shift, and goto state 124
+    tok_literal       shift, and goto state 126
+
+    ConstList   goto state 128
+    ConstMap    goto state 129
+    ConstValue  goto state 141
+
+state 140 // tok_const tok_binary tok_identifier '=' '[' ']'
+
+   42 ConstList: '[' ConstListContents ']' .  [$end, '(', ')', ',', ':', ';', '[', ']', '{', '}', tok_binary, tok_bool, tok_const, tok_double, tok_dub_constant, tok_enum, tok_fieldcomment, tok_i16, tok_i32, tok_i64, tok_i8, tok_identifier, tok_int_constant, tok_list, tok_literal, tok_lobattr, tok_map, tok_optional, tok_required, tok_senum, tok_service, tok_set, tok_slist, tok_string, tok_struct, tok_typedef, tok_union, tok_xception, tok_xsd_attrs, tok_xsd_nillable, tok_xsd_optional]
+
+    $end              reduce using rule 42 (ConstList)
+    '('               reduce using rule 42 (ConstList)
+    ')'               reduce using rule 42 (ConstList)
+    ','               reduce using rule 42 (ConstList)
+    ':'               reduce using rule 42 (ConstList)
+    ';'               reduce using rule 42 (ConstList)
+    '['               reduce using rule 42 (ConstList)
+    ']'               reduce using rule 42 (ConstList)
+    '{'               reduce using rule 42 (ConstList)
+    '}'               reduce using rule 42 (ConstList)
+    tok_binary        reduce using rule 42 (ConstList)
+    tok_bool          reduce using rule 42 (ConstList)
+    tok_const         reduce using rule 42 (ConstList)
+    tok_double        reduce using rule 42 (ConstList)
+    tok_dub_constant  reduce using rule 42 (ConstList)
+    tok_enum          reduce using rule 42 (ConstList)
+    tok_fieldcomment  reduce using rule 42 (ConstList)
+    tok_i16           reduce using rule 42 (ConstList)
+    tok_i32           reduce using rule 42 (ConstList)
+    tok_i64           reduce using rule 42 (ConstList)
+    tok_i8            reduce using rule 42 (ConstList)
+    tok_identifier    reduce using rule 42 (ConstList)
+    tok_int_constant  reduce using rule 42 (ConstList)
+    tok_list          reduce using rule 42 (ConstList)
+    tok_literal       reduce using rule 42 (ConstList)
+    tok_lobattr       reduce using rule 42 (ConstList)
+    tok_map           reduce using rule 42 (ConstList)
+    tok_optional      reduce using rule 42 (ConstList)
+    tok_required      reduce using rule 42 (ConstList)
+    tok_senum         reduce using rule 42 (ConstList)
+    tok_service       reduce using rule 42 (ConstList)
+    tok_set           reduce using rule 42 (ConstList)
+    tok_slist         reduce using rule 42 (ConstList)
+    tok_string        reduce using rule 42 (ConstList)
+    tok_struct        reduce using rule 42 (ConstList)
+    tok_typedef       reduce using rule 42 (ConstList)
+    tok_union         reduce using rule 42 (ConstList)
+    tok_xception      reduce using rule 42 (ConstList)
+    tok_xsd_attrs     reduce using rule 42 (ConstList)
+    tok_xsd_nillable  reduce using rule 42 (ConstList)
+    tok_xsd_optional  reduce using rule 42 (ConstList)
+
+state 141 // tok_const tok_binary tok_identifier '=' '[' tok_dub_constant [',']
+
+   43 ConstListContents: ConstListContents ConstValue . CommaOrSemicolonOptional
+   23 CommaOrSemicolonOptional: .  ['[', ']', '{', tok_dub_constant, tok_identifier, tok_int_constant, tok_literal]
+
+    ','               shift, and goto state 25
+    ';'               shift, and goto state 26
+    '['               reduce using rule 23 (CommaOrSemicolonOptional)
+    ']'               reduce using rule 23 (CommaOrSemicolonOptional)
+    '{'               reduce using rule 23 (CommaOrSemicolonOptional)
+    tok_dub_constant  reduce using rule 23 (CommaOrSemicolonOptional)
+    tok_identifier    reduce using rule 23 (CommaOrSemicolonOptional)
+    tok_int_constant  reduce using rule 23 (CommaOrSemicolonOptional)
+    tok_literal       reduce using rule 23 (CommaOrSemicolonOptional)
+
+    CommaOrSemicolonOptional  goto state 142
+
+state 142 // tok_const tok_binary tok_identifier '=' '[' tok_dub_constant ['[']
+
+   43 ConstListContents: ConstListContents ConstValue CommaOrSemicolonOptional .  ['[', ']', '{', tok_dub_constant, tok_identifier, tok_int_constant, tok_literal]
+
+    '['               reduce using rule 43 (ConstListContents)
+    ']'               reduce using rule 43 (ConstListContents)
+    '{'               reduce using rule 43 (ConstListContents)
+    tok_dub_constant  reduce using rule 43 (ConstListContents)
+    tok_identifier    reduce using rule 43 (ConstListContents)
+    tok_int_constant  reduce using rule 43 (ConstListContents)
+    tok_literal       reduce using rule 43 (ConstListContents)
+
+state 143 // tok_xception tok_identifier '{' tok_binary tok_identifier tok_xsd_optional
+
+   53 XsdOptional: tok_xsd_optional .  ['(', ')', ',', ';', '}', tok_binary, tok_bool, tok_double, tok_fieldcomment, tok_i16, tok_i32, tok_i64, tok_i8, tok_identifier, tok_int_constant, tok_list, tok_map, tok_optional, tok_required, tok_set, tok_slist, tok_string, tok_xsd_attrs, tok_xsd_nillable]
+
+    '('               reduce using rule 53 (XsdOptional)
+    ')'               reduce using rule 53 (XsdOptional)
+    ','               reduce using rule 53 (XsdOptional)
+    ';'               reduce using rule 53 (XsdOptional)
+    '}'               reduce using rule 53 (XsdOptional)
+    tok_binary        reduce using rule 53 (XsdOptional)
+    tok_bool          reduce using rule 53 (XsdOptional)
+    tok_double        reduce using rule 53 (XsdOptional)
+    tok_fieldcomment  reduce using rule 53 (XsdOptional)
+    tok_i16           reduce using rule 53 (XsdOptional)
+    tok_i32           reduce using rule 53 (XsdOptional)
+    tok_i64           reduce using rule 53 (XsdOptional)
+    tok_i8            reduce using rule 53 (XsdOptional)
+    tok_identifier    reduce using rule 53 (XsdOptional)
+    tok_int_constant  reduce using rule 53 (XsdOptional)
+    tok_list          reduce using rule 53 (XsdOptional)
+    tok_map           reduce using rule 53 (XsdOptional)
+    tok_optional      reduce using rule 53 (XsdOptional)
+    tok_required      reduce using rule 53 (XsdOptional)
+    tok_set           reduce using rule 53 (XsdOptional)
+    tok_slist         reduce using rule 53 (XsdOptional)
+    tok_string        reduce using rule 53 (XsdOptional)
+    tok_xsd_attrs     reduce using rule 53 (XsdOptional)
+    tok_xsd_nillable  reduce using rule 53 (XsdOptional)
+
+state 144 // tok_xception tok_identifier '{' tok_binary tok_identifier ['(']
+
+   74 Field: CaptureDocText FieldIdentifier FieldRequiredness FieldType FieldReference tok_identifier FieldValue XsdOptional . XsdNillable XsdAttributes TypeAnnotations CommaOrSemicolonOptional FieldComment
+   56 XsdNillable: .  ['(', ')', ',', ';', '}', tok_binary, tok_bool, tok_double, tok_fieldcomment, tok_i16, tok_i32, tok_i64, tok_i8, tok_identifier, tok_int_constant, tok_list, tok_map, tok_optional, tok_required, tok_set, tok_slist, tok_string, tok_xsd_attrs]
+
+    '('               reduce using rule 56 (XsdNillable)
+    ')'               reduce using rule 56 (XsdNillable)
+    ','               reduce using rule 56 (XsdNillable)
+    ';'               reduce using rule 56 (XsdNillable)
+    '}'               reduce using rule 56 (XsdNillable)
+    tok_binary        reduce using rule 56 (XsdNillable)
+    tok_bool          reduce using rule 56 (XsdNillable)
+    tok_double        reduce using rule 56 (XsdNillable)
+    tok_fieldcomment  reduce using rule 56 (XsdNillable)
+    tok_i16           reduce using rule 56 (XsdNillable)
+    tok_i32           reduce using rule 56 (XsdNillable)
+    tok_i64           reduce using rule 56 (XsdNillable)
+    tok_i8            reduce using rule 56 (XsdNillable)
+    tok_identifier    reduce using rule 56 (XsdNillable)
+    tok_int_constant  reduce using rule 56 (XsdNillable)
+    tok_list          reduce using rule 56 (XsdNillable)
+    tok_map           reduce using rule 56 (XsdNillable)
+    tok_optional      reduce using rule 56 (XsdNillable)
+    tok_required      reduce using rule 56 (XsdNillable)
+    tok_set           reduce using rule 56 (XsdNillable)
+    tok_slist         reduce using rule 56 (XsdNillable)
+    tok_string        reduce using rule 56 (XsdNillable)
+    tok_xsd_attrs     reduce using rule 56 (XsdNillable)
+    tok_xsd_nillable  shift, and goto state 145
+
+    XsdNillable  goto state 146
+
+state 145 // tok_xception tok_identifier '{' tok_binary tok_identifier tok_xsd_nillable
+
+   55 XsdNillable: tok_xsd_nillable .  ['(', ')', ',', ';', '}', tok_binary, tok_bool, tok_double, tok_fieldcomment, tok_i16, tok_i32, tok_i64, tok_i8, tok_identifier, tok_int_constant, tok_list, tok_map, tok_optional, tok_required, tok_set, tok_slist, tok_string, tok_xsd_attrs]
+
+    '('               reduce using rule 55 (XsdNillable)
+    ')'               reduce using rule 55 (XsdNillable)
+    ','               reduce using rule 55 (XsdNillable)
+    ';'               reduce using rule 55 (XsdNillable)
+    '}'               reduce using rule 55 (XsdNillable)
+    tok_binary        reduce using rule 55 (XsdNillable)
+    tok_bool          reduce using rule 55 (XsdNillable)
+    tok_double        reduce using rule 55 (XsdNillable)
+    tok_fieldcomment  reduce using rule 55 (XsdNillable)
+    tok_i16           reduce using rule 55 (XsdNillable)
+    tok_i32           reduce using rule 55 (XsdNillable)
+    tok_i64           reduce using rule 55 (XsdNillable)
+    tok_i8            reduce using rule 55 (XsdNillable)
+    tok_identifier    reduce using rule 55 (XsdNillable)
+    tok_int_constant  reduce using rule 55 (XsdNillable)
+    tok_list          reduce using rule 55 (XsdNillable)
+    tok_map           reduce using rule 55 (XsdNillable)
+    tok_optional      reduce using rule 55 (XsdNillable)
+    tok_required      reduce using rule 55 (XsdNillable)
+    tok_set           reduce using rule 55 (XsdNillable)
+    tok_slist         reduce using rule 55 (XsdNillable)
+    tok_string        reduce using rule 55 (XsdNillable)
+    tok_xsd_attrs     reduce using rule 55 (XsdNillable)
+
+state 146 // tok_xception tok_identifier '{' tok_binary tok_identifier ['(']
+
+   74 Field: CaptureDocText FieldIdentifier FieldRequiredness FieldType FieldReference tok_identifier FieldValue XsdOptional XsdNillable . XsdAttributes TypeAnnotations CommaOrSemicolonOptional FieldComment
+   58 XsdAttributes: .  ['(', ')', ',', ';', '}', tok_binary, tok_bool, tok_double, tok_fieldcomment, tok_i16, tok_i32, tok_i64, tok_i8, tok_identifier, tok_int_constant, tok_list, tok_map, tok_optional, tok_required, tok_set, tok_slist, tok_string]
+
+    '('               reduce using rule 58 (XsdAttributes)
+    ')'               reduce using rule 58 (XsdAttributes)
+    ','               reduce using rule 58 (XsdAttributes)
+    ';'               reduce using rule 58 (XsdAttributes)
+    '}'               reduce using rule 58 (XsdAttributes)
+    tok_binary        reduce using rule 58 (XsdAttributes)
+    tok_bool          reduce using rule 58 (XsdAttributes)
+    tok_double        reduce using rule 58 (XsdAttributes)
+    tok_fieldcomment  reduce using rule 58 (XsdAttributes)
+    tok_i16           reduce using rule 58 (XsdAttributes)
+    tok_i32           reduce using rule 58 (XsdAttributes)
+    tok_i64           reduce using rule 58 (XsdAttributes)
+    tok_i8            reduce using rule 58 (XsdAttributes)
+    tok_identifier    reduce using rule 58 (XsdAttributes)
+    tok_int_constant  reduce using rule 58 (XsdAttributes)
+    tok_list          reduce using rule 58 (XsdAttributes)
+    tok_map           reduce using rule 58 (XsdAttributes)
+    tok_optional      reduce using rule 58 (XsdAttributes)
+    tok_required      reduce using rule 58 (XsdAttributes)
+    tok_set           reduce using rule 58 (XsdAttributes)
+    tok_slist         reduce using rule 58 (XsdAttributes)
+    tok_string        reduce using rule 58 (XsdAttributes)
+    tok_xsd_attrs     shift, and goto state 147
+
+    XsdAttributes  goto state 148
+
+state 147 // tok_xception tok_identifier '{' tok_binary tok_identifier tok_xsd_attrs
+
+   57 XsdAttributes: tok_xsd_attrs . '{' FieldList '}'
+
+    '{'  shift, and goto state 152
+
+state 148 // tok_xception tok_identifier '{' tok_binary tok_identifier ['(']
+
+   74 Field: CaptureDocText FieldIdentifier FieldRequiredness FieldType FieldReference tok_identifier FieldValue XsdOptional XsdNillable XsdAttributes . TypeAnnotations CommaOrSemicolonOptional FieldComment
+  109 TypeAnnotations: .  [')', ',', ';', '}', tok_binary, tok_bool, tok_double, tok_fieldcomment, tok_i16, tok_i32, tok_i64, tok_i8, tok_identifier, tok_int_constant, tok_list, tok_map, tok_optional, tok_required, tok_set, tok_slist, tok_string]
+
+    '('               shift, and goto state 17
+    ')'               reduce using rule 109 (TypeAnnotations)
+    ','               reduce using rule 109 (TypeAnnotations)
+    ';'               reduce using rule 109 (TypeAnnotations)
+    '}'               reduce using rule 109 (TypeAnnotations)
+    tok_binary        reduce using rule 109 (TypeAnnotations)
+    tok_bool          reduce using rule 109 (TypeAnnotations)
+    tok_double        reduce using rule 109 (TypeAnnotations)
+    tok_fieldcomment  reduce using rule 109 (TypeAnnotations)
+    tok_i16           reduce using rule 109 (TypeAnnotations)
+    tok_i32           reduce using rule 109 (TypeAnnotations)
+    tok_i64           reduce using rule 109 (TypeAnnotations)
+    tok_i8            reduce using rule 109 (TypeAnnotations)
+    tok_identifier    reduce using rule 109 (TypeAnnotations)
+    tok_int_constant  reduce using rule 109 (TypeAnnotations)
+    tok_list          reduce using rule 109 (TypeAnnotations)
+    tok_map           reduce using rule 109 (TypeAnnotations)
+    tok_optional      reduce using rule 109 (TypeAnnotations)
+    tok_required      reduce using rule 109 (TypeAnnotations)
+    tok_set           reduce using rule 109 (TypeAnnotations)
+    tok_slist         reduce using rule 109 (TypeAnnotations)
+    tok_string        reduce using rule 109 (TypeAnnotations)
+
+    TypeAnnotations  goto state 149
+
+state 149 // tok_xception tok_identifier '{' tok_binary tok_identifier [')']
+
+   74 Field: CaptureDocText FieldIdentifier FieldRequiredness FieldType FieldReference tok_identifier FieldValue XsdOptional XsdNillable XsdAttributes TypeAnnotations . CommaOrSemicolonOptional FieldComment
+   23 CommaOrSemicolonOptional: .  [')', '}', tok_binary, tok_bool, tok_double, tok_fieldcomment, tok_i16, tok_i32, tok_i64, tok_i8, tok_identifier, tok_int_constant, tok_list, tok_map, tok_optional, tok_required, tok_set, tok_slist, tok_string]
+
+    ')'               reduce using rule 23 (CommaOrSemicolonOptional)
+    ','               shift, and goto state 25
+    ';'               shift, and goto state 26
+    '}'               reduce using rule 23 (CommaOrSemicolonOptional)
+    tok_binary        reduce using rule 23 (CommaOrSemicolonOptional)
+    tok_bool          reduce using rule 23 (CommaOrSemicolonOptional)
+    tok_double        reduce using rule 23 (CommaOrSemicolonOptional)
+    tok_fieldcomment  reduce using rule 23 (CommaOrSemicolonOptional)
+    tok_i16           reduce using rule 23 (CommaOrSemicolonOptional)
+    tok_i32           reduce using rule 23 (CommaOrSemicolonOptional)
+    tok_i64           reduce using rule 23 (CommaOrSemicolonOptional)
+    tok_i8            reduce using rule 23 (CommaOrSemicolonOptional)
+    tok_identifier    reduce using rule 23 (CommaOrSemicolonOptional)
+    tok_int_constant  reduce using rule 23 (CommaOrSemicolonOptional)
+    tok_list          reduce using rule 23 (CommaOrSemicolonOptional)
+    tok_map           reduce using rule 23 (CommaOrSemicolonOptional)
+    tok_optional      reduce using rule 23 (CommaOrSemicolonOptional)
+    tok_required      reduce using rule 23 (CommaOrSemicolonOptional)
+    tok_set           reduce using rule 23 (CommaOrSemicolonOptional)
+    tok_slist         reduce using rule 23 (CommaOrSemicolonOptional)
+    tok_string        reduce using rule 23 (CommaOrSemicolonOptional)
+
+    CommaOrSemicolonOptional  goto state 150
+
+state 150 // tok_xception tok_identifier '{' tok_binary tok_identifier [')']
+
+   74 Field: CaptureDocText FieldIdentifier FieldRequiredness FieldType FieldReference tok_identifier FieldValue XsdOptional XsdNillable XsdAttributes TypeAnnotations CommaOrSemicolonOptional . FieldComment
+  119 FieldComment: .  [')', '}', tok_binary, tok_bool, tok_double, tok_i16, tok_i32, tok_i64, tok_i8, tok_identifier, tok_int_constant, tok_list, tok_map, tok_optional, tok_required, tok_set, tok_slist, tok_string]
+
+    ')'               reduce using rule 119 (FieldComment)
+    '}'               reduce using rule 119 (FieldComment)
+    tok_binary        reduce using rule 119 (FieldComment)
+    tok_bool          reduce using rule 119 (FieldComment)
+    tok_double        reduce using rule 119 (FieldComment)
+    tok_fieldcomment  shift, and goto state 29
+    tok_i16           reduce using rule 119 (FieldComment)
+    tok_i32           reduce using rule 119 (FieldComment)
+    tok_i64           reduce using rule 119 (FieldComment)
+    tok_i8            reduce using rule 119 (FieldComment)
+    tok_identifier    reduce using rule 119 (FieldComment)
+    tok_int_constant  reduce using rule 119 (FieldComment)
+    tok_list          reduce using rule 119 (FieldComment)
+    tok_map           reduce using rule 119 (FieldComment)
+    tok_optional      reduce using rule 119 (FieldComment)
+    tok_required      reduce using rule 119 (FieldComment)
+    tok_set           reduce using rule 119 (FieldComment)
+    tok_slist         reduce using rule 119 (FieldComment)
+    tok_string        reduce using rule 119 (FieldComment)
+
+    FieldComment  goto state 151
+
+state 151 // tok_xception tok_identifier '{' tok_binary tok_identifier [')']
+
+   74 Field: CaptureDocText FieldIdentifier FieldRequiredness FieldType FieldReference tok_identifier FieldValue XsdOptional XsdNillable XsdAttributes TypeAnnotations CommaOrSemicolonOptional FieldComment .  [')', '}', tok_binary, tok_bool, tok_double, tok_i16, tok_i32, tok_i64, tok_i8, tok_identifier, tok_int_constant, tok_list, tok_map, tok_optional, tok_required, tok_set, tok_slist, tok_string]
+
+    ')'               reduce using rule 74 (Field)
+    '}'               reduce using rule 74 (Field)
+    tok_binary        reduce using rule 74 (Field)
+    tok_bool          reduce using rule 74 (Field)
+    tok_double        reduce using rule 74 (Field)
+    tok_i16           reduce using rule 74 (Field)
+    tok_i32           reduce using rule 74 (Field)
+    tok_i64           reduce using rule 74 (Field)
+    tok_i8            reduce using rule 74 (Field)
+    tok_identifier    reduce using rule 74 (Field)
+    tok_int_constant  reduce using rule 74 (Field)
+    tok_list          reduce using rule 74 (Field)
+    tok_map           reduce using rule 74 (Field)
+    tok_optional      reduce using rule 74 (Field)
+    tok_required      reduce using rule 74 (Field)
+    tok_set           reduce using rule 74 (Field)
+    tok_slist         reduce using rule 74 (Field)
+    tok_string        reduce using rule 74 (Field)
+
+state 152 // tok_xception tok_identifier '{' tok_binary tok_identifier tok_xsd_attrs '{'
+
+   57 XsdAttributes: tok_xsd_attrs '{' . FieldList '}'
+   73 FieldList: .  ['}', tok_binary, tok_bool, tok_double, tok_i16, tok_i32, tok_i64, tok_i8, tok_identifier, tok_int_constant, tok_list, tok_map, tok_optional, tok_required, tok_set, tok_slist, tok_string]
+
+    '}'               reduce using rule 73 (FieldList)
+    tok_binary        reduce using rule 73 (FieldList)
+    tok_bool          reduce using rule 73 (FieldList)
+    tok_double        reduce using rule 73 (FieldList)
+    tok_i16           reduce using rule 73 (FieldList)
+    tok_i32           reduce using rule 73 (FieldList)
+    tok_i64           reduce using rule 73 (FieldList)
+    tok_i8            reduce using rule 73 (FieldList)
+    tok_identifier    reduce using rule 73 (FieldList)
+    tok_int_constant  reduce using rule 73 (FieldList)
+    tok_list          reduce using rule 73 (FieldList)
+    tok_map           reduce using rule 73 (FieldList)
+    tok_optional      reduce using rule 73 (FieldList)
+    tok_required      reduce using rule 73 (FieldList)
+    tok_set           reduce using rule 73 (FieldList)
+    tok_slist         reduce using rule 73 (FieldList)
+    tok_string        reduce using rule 73 (FieldList)
+
+    FieldList  goto state 153
+
+state 153 // tok_xception tok_identifier '{' tok_binary tok_identifier tok_xsd_attrs '{' ['}']
+
+   57 XsdAttributes: tok_xsd_attrs '{' FieldList . '}'
+   72 FieldList: FieldList . Field
+    2 CaptureDocText: .  [tok_binary, tok_bool, tok_double, tok_i16, tok_i32, tok_i64, tok_i8, tok_identifier, tok_int_constant, tok_list, tok_map, tok_optional, tok_required, tok_set, tok_slist, tok_string]
+
+    '}'               shift, and goto state 154
+    tok_binary        reduce using rule 2 (CaptureDocText)
+    tok_bool          reduce using rule 2 (CaptureDocText)
+    tok_double        reduce using rule 2 (CaptureDocText)
+    tok_i16           reduce using rule 2 (CaptureDocText)
+    tok_i32           reduce using rule 2 (CaptureDocText)
+    tok_i64           reduce using rule 2 (CaptureDocText)
+    tok_i8            reduce using rule 2 (CaptureDocText)
+    tok_identifier    reduce using rule 2 (CaptureDocText)
+    tok_int_constant  reduce using rule 2 (CaptureDocText)
+    tok_list          reduce using rule 2 (CaptureDocText)
+    tok_map           reduce using rule 2 (CaptureDocText)
+    tok_optional      reduce using rule 2 (CaptureDocText)
+    tok_required      reduce using rule 2 (CaptureDocText)
+    tok_set           reduce using rule 2 (CaptureDocText)
+    tok_slist         reduce using rule 2 (CaptureDocText)
+    tok_string        reduce using rule 2 (CaptureDocText)
+
+    CaptureDocText  goto state 111
+    Field           goto state 110
+
+state 154 // tok_xception tok_identifier '{' tok_binary tok_identifier tok_xsd_attrs '{' '}'
+
+   57 XsdAttributes: tok_xsd_attrs '{' FieldList '}' .  ['(', ')', ',', ';', '}', tok_binary, tok_bool, tok_double, tok_fieldcomment, tok_i16, tok_i32, tok_i64, tok_i8, tok_identifier, tok_int_constant, tok_list, tok_map, tok_optional, tok_required, tok_set, tok_slist, tok_string]
+
+    '('               reduce using rule 57 (XsdAttributes)
+    ')'               reduce using rule 57 (XsdAttributes)
+    ','               reduce using rule 57 (XsdAttributes)
+    ';'               reduce using rule 57 (XsdAttributes)
+    '}'               reduce using rule 57 (XsdAttributes)
+    tok_binary        reduce using rule 57 (XsdAttributes)
+    tok_bool          reduce using rule 57 (XsdAttributes)
+    tok_double        reduce using rule 57 (XsdAttributes)
+    tok_fieldcomment  reduce using rule 57 (XsdAttributes)
+    tok_i16           reduce using rule 57 (XsdAttributes)
+    tok_i32           reduce using rule 57 (XsdAttributes)
+    tok_i64           reduce using rule 57 (XsdAttributes)
+    tok_i8            reduce using rule 57 (XsdAttributes)
+    tok_identifier    reduce using rule 57 (XsdAttributes)
+    tok_int_constant  reduce using rule 57 (XsdAttributes)
+    tok_list          reduce using rule 57 (XsdAttributes)
+    tok_map           reduce using rule 57 (XsdAttributes)
+    tok_optional      reduce using rule 57 (XsdAttributes)
+    tok_required      reduce using rule 57 (XsdAttributes)
+    tok_set           reduce using rule 57 (XsdAttributes)
+    tok_slist         reduce using rule 57 (XsdAttributes)
+    tok_string        reduce using rule 57 (XsdAttributes)
+
+state 155 // tok_service tok_identifier '{' tok_binary tok_identifier '(' ')' ['(']
+
+   67 Function: CaptureDocText LobAttributeList Oneway FunctionType tok_identifier '(' FieldList ')' Throws . TypeAnnotations CommaOrSemicolonOptional FieldComment
+  109 TypeAnnotations: .  [',', ';', '}', tok_binary, tok_bool, tok_double, tok_fieldcomment, tok_i16, tok_i32, tok_i64, tok_i8, tok_identifier, tok_list, tok_lobattr, tok_map, tok_oneway, tok_set, tok_slist, tok_string, tok_void]
+
+    '('               shift, and goto state 17
+    ','               reduce using rule 109 (TypeAnnotations)
+    ';'               reduce using rule 109 (TypeAnnotations)
+    '}'               reduce using rule 109 (TypeAnnotations)
+    tok_binary        reduce using rule 109 (TypeAnnotations)
+    tok_bool          reduce using rule 109 (TypeAnnotations)
+    tok_double        reduce using rule 109 (TypeAnnotations)
+    tok_fieldcomment  reduce using rule 109 (TypeAnnotations)
+    tok_i16           reduce using rule 109 (TypeAnnotations)
+    tok_i32           reduce using rule 109 (TypeAnnotations)
+    tok_i64           reduce using rule 109 (TypeAnnotations)
+    tok_i8            reduce using rule 109 (TypeAnnotations)
+    tok_identifier    reduce using rule 109 (TypeAnnotations)
+    tok_list          reduce using rule 109 (TypeAnnotations)
+    tok_lobattr       reduce using rule 109 (TypeAnnotations)
+    tok_map           reduce using rule 109 (TypeAnnotations)
+    tok_oneway        reduce using rule 109 (TypeAnnotations)
+    tok_set           reduce using rule 109 (TypeAnnotations)
+    tok_slist         reduce using rule 109 (TypeAnnotations)
+    tok_string        reduce using rule 109 (TypeAnnotations)
+    tok_void          reduce using rule 109 (TypeAnnotations)
+
+    TypeAnnotations  goto state 160
+
+state 156 // tok_service tok_identifier '{' tok_binary tok_identifier '(' ')' tok_throws
+
+   70 Throws: tok_throws . '(' FieldList ')'
+
+    '('  shift, and goto state 157
+
+state 157 // tok_service tok_identifier '{' tok_binary tok_identifier '(' ')' tok_throws '('
+
+   70 Throws: tok_throws '(' . FieldList ')'
+   73 FieldList: .  [')', tok_binary, tok_bool, tok_double, tok_i16, tok_i32, tok_i64, tok_i8, tok_identifier, tok_int_constant, tok_list, tok_map, tok_optional, tok_required, tok_set, tok_slist, tok_string]
+
+    ')'               reduce using rule 73 (FieldList)
+    tok_binary        reduce using rule 73 (FieldList)
+    tok_bool          reduce using rule 73 (FieldList)
+    tok_double        reduce using rule 73 (FieldList)
+    tok_i16           reduce using rule 73 (FieldList)
+    tok_i32           reduce using rule 73 (FieldList)
+    tok_i64           reduce using rule 73 (FieldList)
+    tok_i8            reduce using rule 73 (FieldList)
+    tok_identifier    reduce using rule 73 (FieldList)
+    tok_int_constant  reduce using rule 73 (FieldList)
+    tok_list          reduce using rule 73 (FieldList)
+    tok_map           reduce using rule 73 (FieldList)
+    tok_optional      reduce using rule 73 (FieldList)
+    tok_required      reduce using rule 73 (FieldList)
+    tok_set           reduce using rule 73 (FieldList)
+    tok_slist         reduce using rule 73 (FieldList)
+    tok_string        reduce using rule 73 (FieldList)
+
+    FieldList  goto state 158
+
+state 158 // tok_service tok_identifier '{' tok_binary tok_identifier '(' ')' tok_throws '(' [')']
+
+   70 Throws: tok_throws '(' FieldList . ')'
+   72 FieldList: FieldList . Field
+    2 CaptureDocText: .  [tok_binary, tok_bool, tok_double, tok_i16, tok_i32, tok_i64, tok_i8, tok_identifier, tok_int_constant, tok_list, tok_map, tok_optional, tok_required, tok_set, tok_slist, tok_string]
+
+    ')'               shift, and goto state 159
+    tok_binary        reduce using rule 2 (CaptureDocText)
+    tok_bool          reduce using rule 2 (CaptureDocText)
+    tok_double        reduce using rule 2 (CaptureDocText)
+    tok_i16           reduce using rule 2 (CaptureDocText)
+    tok_i32           reduce using rule 2 (CaptureDocText)
+    tok_i64           reduce using rule 2 (CaptureDocText)
+    tok_i8            reduce using rule 2 (CaptureDocText)
+    tok_identifier    reduce using rule 2 (CaptureDocText)
+    tok_int_constant  reduce using rule 2 (CaptureDocText)
+    tok_list          reduce using rule 2 (CaptureDocText)
+    tok_map           reduce using rule 2 (CaptureDocText)
+    tok_optional      reduce using rule 2 (CaptureDocText)
+    tok_required      reduce using rule 2 (CaptureDocText)
+    tok_set           reduce using rule 2 (CaptureDocText)
+    tok_slist         reduce using rule 2 (CaptureDocText)
+    tok_string        reduce using rule 2 (CaptureDocText)
+
+    CaptureDocText  goto state 111
+    Field           goto state 110
+
+state 159 // tok_service tok_identifier '{' tok_binary tok_identifier '(' ')' tok_throws '(' ')'
+
+   70 Throws: tok_throws '(' FieldList ')' .  ['(', ',', ';', '}', tok_binary, tok_bool, tok_double, tok_fieldcomment, tok_i16, tok_i32, tok_i64, tok_i8, tok_identifier, tok_list, tok_lobattr, tok_map, tok_oneway, tok_set, tok_slist, tok_string, tok_void]
+
+    '('               reduce using rule 70 (Throws)
+    ','               reduce using rule 70 (Throws)
+    ';'               reduce using rule 70 (Throws)
+    '}'               reduce using rule 70 (Throws)
+    tok_binary        reduce using rule 70 (Throws)
+    tok_bool          reduce using rule 70 (Throws)
+    tok_double        reduce using rule 70 (Throws)
+    tok_fieldcomment  reduce using rule 70 (Throws)
+    tok_i16           reduce using rule 70 (Throws)
+    tok_i32           reduce using rule 70 (Throws)
+    tok_i64           reduce using rule 70 (Throws)
+    tok_i8            reduce using rule 70 (Throws)
+    tok_identifier    reduce using rule 70 (Throws)
+    tok_list          reduce using rule 70 (Throws)
+    tok_lobattr       reduce using rule 70 (Throws)
+    tok_map           reduce using rule 70 (Throws)
+    tok_oneway        reduce using rule 70 (Throws)
+    tok_set           reduce using rule 70 (Throws)
+    tok_slist         reduce using rule 70 (Throws)
+    tok_string        reduce using rule 70 (Throws)
+    tok_void          reduce using rule 70 (Throws)
+
+state 160 // tok_service tok_identifier '{' tok_binary tok_identifier '(' ')' [',']
+
+   67 Function: CaptureDocText LobAttributeList Oneway FunctionType tok_identifier '(' FieldList ')' Throws TypeAnnotations . CommaOrSemicolonOptional FieldComment
+   23 CommaOrSemicolonOptional: .  ['}', tok_binary, tok_bool, tok_double, tok_fieldcomment, tok_i16, tok_i32, tok_i64, tok_i8, tok_identifier, tok_list, tok_lobattr, tok_map, tok_oneway, tok_set, tok_slist, tok_string, tok_void]
+
+    ','               shift, and goto state 25
+    ';'               shift, and goto state 26
+    '}'               reduce using rule 23 (CommaOrSemicolonOptional)
+    tok_binary        reduce using rule 23 (CommaOrSemicolonOptional)
+    tok_bool          reduce using rule 23 (CommaOrSemicolonOptional)
+    tok_double        reduce using rule 23 (CommaOrSemicolonOptional)
+    tok_fieldcomment  reduce using rule 23 (CommaOrSemicolonOptional)
+    tok_i16           reduce using rule 23 (CommaOrSemicolonOptional)
+    tok_i32           reduce using rule 23 (CommaOrSemicolonOptional)
+    tok_i64           reduce using rule 23 (CommaOrSemicolonOptional)
+    tok_i8            reduce using rule 23 (CommaOrSemicolonOptional)
+    tok_identifier    reduce using rule 23 (CommaOrSemicolonOptional)
+    tok_list          reduce using rule 23 (CommaOrSemicolonOptional)
+    tok_lobattr       reduce using rule 23 (CommaOrSemicolonOptional)
+    tok_map           reduce using rule 23 (CommaOrSemicolonOptional)
+    tok_oneway        reduce using rule 23 (CommaOrSemicolonOptional)
+    tok_set           reduce using rule 23 (CommaOrSemicolonOptional)
+    tok_slist         reduce using rule 23 (CommaOrSemicolonOptional)
+    tok_string        reduce using rule 23 (CommaOrSemicolonOptional)
+    tok_void          reduce using rule 23 (CommaOrSemicolonOptional)
+
+    CommaOrSemicolonOptional  goto state 161
+
+state 161 // tok_service tok_identifier '{' tok_binary tok_identifier '(' ')' ['}']
+
+   67 Function: CaptureDocText LobAttributeList Oneway FunctionType tok_identifier '(' FieldList ')' Throws TypeAnnotations CommaOrSemicolonOptional . FieldComment
+  119 FieldComment: .  ['}', tok_binary, tok_bool, tok_double, tok_i16, tok_i32, tok_i64, tok_i8, tok_identifier, tok_list, tok_lobattr, tok_map, tok_oneway, tok_set, tok_slist, tok_string, tok_void]
+
+    '}'               reduce using rule 119 (FieldComment)
+    tok_binary        reduce using rule 119 (FieldComment)
+    tok_bool          reduce using rule 119 (FieldComment)
+    tok_double        reduce using rule 119 (FieldComment)
+    tok_fieldcomment  shift, and goto state 29
+    tok_i16           reduce using rule 119 (FieldComment)
+    tok_i32           reduce using rule 119 (FieldComment)
+    tok_i64           reduce using rule 119 (FieldComment)
+    tok_i8            reduce using rule 119 (FieldComment)
+    tok_identifier    reduce using rule 119 (FieldComment)
+    tok_list          reduce using rule 119 (FieldComment)
+    tok_lobattr       reduce using rule 119 (FieldComment)
+    tok_map           reduce using rule 119 (FieldComment)
+    tok_oneway        reduce using rule 119 (FieldComment)
+    tok_set           reduce using rule 119 (FieldComment)
+    tok_slist         reduce using rule 119 (FieldComment)
+    tok_string        reduce using rule 119 (FieldComment)
+    tok_void          reduce using rule 119 (FieldComment)
+
+    FieldComment  goto state 162
+
+state 162 // tok_service tok_identifier '{' tok_binary tok_identifier '(' ')' ['}']
+
+   67 Function: CaptureDocText LobAttributeList Oneway FunctionType tok_identifier '(' FieldList ')' Throws TypeAnnotations CommaOrSemicolonOptional FieldComment .  ['}', tok_binary, tok_bool, tok_double, tok_i16, tok_i32, tok_i64, tok_i8, tok_identifier, tok_list, tok_lobattr, tok_map, tok_oneway, tok_set, tok_slist, tok_string, tok_void]
+
+    '}'             reduce using rule 67 (Function)
+    tok_binary      reduce using rule 67 (Function)
+    tok_bool        reduce using rule 67 (Function)
+    tok_double      reduce using rule 67 (Function)
+    tok_i16         reduce using rule 67 (Function)
+    tok_i32         reduce using rule 67 (Function)
+    tok_i64         reduce using rule 67 (Function)
+    tok_i8          reduce using rule 67 (Function)
+    tok_identifier  reduce using rule 67 (Function)
+    tok_list        reduce using rule 67 (Function)
+    tok_lobattr     reduce using rule 67 (Function)
+    tok_map         reduce using rule 67 (Function)
+    tok_oneway      reduce using rule 67 (Function)
+    tok_set         reduce using rule 67 (Function)
+    tok_slist       reduce using rule 67 (Function)
+    tok_string      reduce using rule 67 (Function)
+    tok_void        reduce using rule 67 (Function)
+
+state 163 // tok_service tok_identifier '{' '}'
+
+   60 Service: LobAttributeList tok_service tok_identifier Extends '{' FlagArgs FunctionList UnflagArgs '}' . TypeAnnotations
+  109 TypeAnnotations: .  [$end, tok_const, tok_enum, tok_lobattr, tok_senum, tok_service, tok_struct, tok_typedef, tok_union, tok_xception]
+
+    $end          reduce using rule 109 (TypeAnnotations)
+    '('           shift, and goto state 17
+    tok_const     reduce using rule 109 (TypeAnnotations)
+    tok_enum      reduce using rule 109 (TypeAnnotations)
+    tok_lobattr   reduce using rule 109 (TypeAnnotations)
+    tok_senum     reduce using rule 109 (TypeAnnotations)
+    tok_service   reduce using rule 109 (TypeAnnotations)
+    tok_struct    reduce using rule 109 (TypeAnnotations)
+    tok_typedef   reduce using rule 109 (TypeAnnotations)
+    tok_union     reduce using rule 109 (TypeAnnotations)
+    tok_xception  reduce using rule 109 (TypeAnnotations)
+
+    TypeAnnotations  goto state 164
+
+state 164 // tok_service tok_identifier '{' '}' [$end]
+
+   60 Service: LobAttributeList tok_service tok_identifier Extends '{' FlagArgs FunctionList UnflagArgs '}' TypeAnnotations .  [$end, tok_const, tok_enum, tok_lobattr, tok_senum, tok_service, tok_struct, tok_typedef, tok_union, tok_xception]
+
+    $end          reduce using rule 60 (Service)
+    tok_const     reduce using rule 60 (Service)
+    tok_enum      reduce using rule 60 (Service)
+    tok_lobattr   reduce using rule 60 (Service)
+    tok_senum     reduce using rule 60 (Service)
+    tok_service   reduce using rule 60 (Service)
+    tok_struct    reduce using rule 60 (Service)
+    tok_typedef   reduce using rule 60 (Service)
+    tok_union     reduce using rule 60 (Service)
+    tok_xception  reduce using rule 60 (Service)
+
+state 165 // tok_xception tok_identifier
+
+   59 Xception: tok_xception tok_identifier . '{' FieldList '}' TypeAnnotations
+
+    '{'  shift, and goto state 166
+
+state 166 // tok_xception tok_identifier '{'
+
+   59 Xception: tok_xception tok_identifier '{' . FieldList '}' TypeAnnotations
+   73 FieldList: .  ['}', tok_binary, tok_bool, tok_double, tok_i16, tok_i32, tok_i64, tok_i8, tok_identifier, tok_int_constant, tok_list, tok_map, tok_optional, tok_required, tok_set, tok_slist, tok_string]
+
+    '}'               reduce using rule 73 (FieldList)
+    tok_binary        reduce using rule 73 (FieldList)
+    tok_bool          reduce using rule 73 (FieldList)
+    tok_double        reduce using rule 73 (FieldList)
+    tok_i16           reduce using rule 73 (FieldList)
+    tok_i32           reduce using rule 73 (FieldList)
+    tok_i64           reduce using rule 73 (FieldList)
+    tok_i8            reduce using rule 73 (FieldList)
+    tok_identifier    reduce using rule 73 (FieldList)
+    tok_int_constant  reduce using rule 73 (FieldList)
+    tok_list          reduce using rule 73 (FieldList)
+    tok_map           reduce using rule 73 (FieldList)
+    tok_optional      reduce using rule 73 (FieldList)
+    tok_required      reduce using rule 73 (FieldList)
+    tok_set           reduce using rule 73 (FieldList)
+    tok_slist         reduce using rule 73 (FieldList)
+    tok_string        reduce using rule 73 (FieldList)
+
+    FieldList  goto state 167
+
+state 167 // tok_xception tok_identifier '{' ['}']
+
+   59 Xception: tok_xception tok_identifier '{' FieldList . '}' TypeAnnotations
+   72 FieldList: FieldList . Field
+    2 CaptureDocText: .  [tok_binary, tok_bool, tok_double, tok_i16, tok_i32, tok_i64, tok_i8, tok_identifier, tok_int_constant, tok_list, tok_map, tok_optional, tok_required, tok_set, tok_slist, tok_string]
+
+    '}'               shift, and goto state 168
+    tok_binary        reduce using rule 2 (CaptureDocText)
+    tok_bool          reduce using rule 2 (CaptureDocText)
+    tok_double        reduce using rule 2 (CaptureDocText)
+    tok_i16           reduce using rule 2 (CaptureDocText)
+    tok_i32           reduce using rule 2 (CaptureDocText)
+    tok_i64           reduce using rule 2 (CaptureDocText)
+    tok_i8            reduce using rule 2 (CaptureDocText)
+    tok_identifier    reduce using rule 2 (CaptureDocText)
+    tok_int_constant  reduce using rule 2 (CaptureDocText)
+    tok_list          reduce using rule 2 (CaptureDocText)
+    tok_map           reduce using rule 2 (CaptureDocText)
+    tok_optional      reduce using rule 2 (CaptureDocText)
+    tok_required      reduce using rule 2 (CaptureDocText)
+    tok_set           reduce using rule 2 (CaptureDocText)
+    tok_slist         reduce using rule 2 (CaptureDocText)
+    tok_string        reduce using rule 2 (CaptureDocText)
+
+    CaptureDocText  goto state 111
+    Field           goto state 110
+
+state 168 // tok_xception tok_identifier '{' '}'
+
+   59 Xception: tok_xception tok_identifier '{' FieldList '}' . TypeAnnotations
+  109 TypeAnnotations: .  [$end, tok_const, tok_enum, tok_lobattr, tok_senum, tok_service, tok_struct, tok_typedef, tok_union, tok_xception]
+
+    $end          reduce using rule 109 (TypeAnnotations)
+    '('           shift, and goto state 17
+    tok_const     reduce using rule 109 (TypeAnnotations)
+    tok_enum      reduce using rule 109 (TypeAnnotations)
+    tok_lobattr   reduce using rule 109 (TypeAnnotations)
+    tok_senum     reduce using rule 109 (TypeAnnotations)
+    tok_service   reduce using rule 109 (TypeAnnotations)
+    tok_struct    reduce using rule 109 (TypeAnnotations)
+    tok_typedef   reduce using rule 109 (TypeAnnotations)
+    tok_union     reduce using rule 109 (TypeAnnotations)
+    tok_xception  reduce using rule 109 (TypeAnnotations)
+
+    TypeAnnotations  goto state 169
+
+state 169 // tok_xception tok_identifier '{' '}' [$end]
+
+   59 Xception: tok_xception tok_identifier '{' FieldList '}' TypeAnnotations .  [$end, tok_const, tok_enum, tok_lobattr, tok_senum, tok_service, tok_struct, tok_typedef, tok_union, tok_xception]
+
+    $end          reduce using rule 59 (Xception)
+    tok_const     reduce using rule 59 (Xception)
+    tok_enum      reduce using rule 59 (Xception)
+    tok_lobattr   reduce using rule 59 (Xception)
+    tok_senum     reduce using rule 59 (Xception)
+    tok_service   reduce using rule 59 (Xception)
+    tok_struct    reduce using rule 59 (Xception)
+    tok_typedef   reduce using rule 59 (Xception)
+    tok_union     reduce using rule 59 (Xception)
+    tok_xception  reduce using rule 59 (Xception)
+
+state 170 // tok_struct tok_identifier
+
+   50 Struct: StructHead tok_identifier . XsdAll '{' FieldList '}' TypeAnnotations
+   52 XsdAll: .  ['{']
+
+    '{'          reduce using rule 52 (XsdAll)
+    tok_xsd_all  shift, and goto state 172
+
+    XsdAll  goto state 171
+
+state 171 // tok_struct tok_identifier ['{']
+
+   50 Struct: StructHead tok_identifier XsdAll . '{' FieldList '}' TypeAnnotations
+
+    '{'  shift, and goto state 173
+
+state 172 // tok_struct tok_identifier tok_xsd_all
+
+   51 XsdAll: tok_xsd_all .  ['{']
+
+    '{'  reduce using rule 51 (XsdAll)
+
+state 173 // tok_struct tok_identifier '{'
+
+   50 Struct: StructHead tok_identifier XsdAll '{' . FieldList '}' TypeAnnotations
+   73 FieldList: .  ['}', tok_binary, tok_bool, tok_double, tok_i16, tok_i32, tok_i64, tok_i8, tok_identifier, tok_int_constant, tok_list, tok_map, tok_optional, tok_required, tok_set, tok_slist, tok_string]
+
+    '}'               reduce using rule 73 (FieldList)
+    tok_binary        reduce using rule 73 (FieldList)
+    tok_bool          reduce using rule 73 (FieldList)
+    tok_double        reduce using rule 73 (FieldList)
+    tok_i16           reduce using rule 73 (FieldList)
+    tok_i32           reduce using rule 73 (FieldList)
+    tok_i64           reduce using rule 73 (FieldList)
+    tok_i8            reduce using rule 73 (FieldList)
+    tok_identifier    reduce using rule 73 (FieldList)
+    tok_int_constant  reduce using rule 73 (FieldList)
+    tok_list          reduce using rule 73 (FieldList)
+    tok_map           reduce using rule 73 (FieldList)
+    tok_optional      reduce using rule 73 (FieldList)
+    tok_required      reduce using rule 73 (FieldList)
+    tok_set           reduce using rule 73 (FieldList)
+    tok_slist         reduce using rule 73 (FieldList)
+    tok_string        reduce using rule 73 (FieldList)
+
+    FieldList  goto state 174
+
+state 174 // tok_struct tok_identifier '{' ['}']
+
+   50 Struct: StructHead tok_identifier XsdAll '{' FieldList . '}' TypeAnnotations
+   72 FieldList: FieldList . Field
+    2 CaptureDocText: .  [tok_binary, tok_bool, tok_double, tok_i16, tok_i32, tok_i64, tok_i8, tok_identifier, tok_int_constant, tok_list, tok_map, tok_optional, tok_required, tok_set, tok_slist, tok_string]
+
+    '}'               shift, and goto state 175
+    tok_binary        reduce using rule 2 (CaptureDocText)
+    tok_bool          reduce using rule 2 (CaptureDocText)
+    tok_double        reduce using rule 2 (CaptureDocText)
+    tok_i16           reduce using rule 2 (CaptureDocText)
+    tok_i32           reduce using rule 2 (CaptureDocText)
+    tok_i64           reduce using rule 2 (CaptureDocText)
+    tok_i8            reduce using rule 2 (CaptureDocText)
+    tok_identifier    reduce using rule 2 (CaptureDocText)
+    tok_int_constant  reduce using rule 2 (CaptureDocText)
+    tok_list          reduce using rule 2 (CaptureDocText)
+    tok_map           reduce using rule 2 (CaptureDocText)
+    tok_optional      reduce using rule 2 (CaptureDocText)
+    tok_required      reduce using rule 2 (CaptureDocText)
+    tok_set           reduce using rule 2 (CaptureDocText)
+    tok_slist         reduce using rule 2 (CaptureDocText)
+    tok_string        reduce using rule 2 (CaptureDocText)
+
+    CaptureDocText  goto state 111
+    Field           goto state 110
+
+state 175 // tok_struct tok_identifier '{' '}'
+
+   50 Struct: StructHead tok_identifier XsdAll '{' FieldList '}' . TypeAnnotations
+  109 TypeAnnotations: .  [$end, tok_const, tok_enum, tok_lobattr, tok_senum, tok_service, tok_struct, tok_typedef, tok_union, tok_xception]
+
+    $end          reduce using rule 109 (TypeAnnotations)
+    '('           shift, and goto state 17
+    tok_const     reduce using rule 109 (TypeAnnotations)
+    tok_enum      reduce using rule 109 (TypeAnnotations)
+    tok_lobattr   reduce using rule 109 (TypeAnnotations)
+    tok_senum     reduce using rule 109 (TypeAnnotations)
+    tok_service   reduce using rule 109 (TypeAnnotations)
+    tok_struct    reduce using rule 109 (TypeAnnotations)
+    tok_typedef   reduce using rule 109 (TypeAnnotations)
+    tok_union     reduce using rule 109 (TypeAnnotations)
+    tok_xception  reduce using rule 109 (TypeAnnotations)
+
+    TypeAnnotations  goto state 176
+
+state 176 // tok_struct tok_identifier '{' '}' [$end]
+
+   50 Struct: StructHead tok_identifier XsdAll '{' FieldList '}' TypeAnnotations .  [$end, tok_const, tok_enum, tok_lobattr, tok_senum, tok_service, tok_struct, tok_typedef, tok_union, tok_xception]
+
+    $end          reduce using rule 50 (Struct)
+    tok_const     reduce using rule 50 (Struct)
+    tok_enum      reduce using rule 50 (Struct)
+    tok_lobattr   reduce using rule 50 (Struct)
+    tok_senum     reduce using rule 50 (Struct)
+    tok_service   reduce using rule 50 (Struct)
+    tok_struct    reduce using rule 50 (Struct)
+    tok_typedef   reduce using rule 50 (Struct)
+    tok_union     reduce using rule 50 (Struct)
+    tok_xception  reduce using rule 50 (Struct)
+
+state 177 // tok_const tok_binary [tok_identifier]
+
+   35 Const: tok_const FieldType . tok_identifier '=' ConstValue CommaOrSemicolonOptional FieldComment
+
+    tok_identifier  shift, and goto state 178
+
+state 178 // tok_const tok_binary tok_identifier
+
+   35 Const: tok_const FieldType tok_identifier . '=' ConstValue CommaOrSemicolonOptional FieldComment
+
+    '='  shift, and goto state 179
+
+state 179 // tok_const tok_binary tok_identifier '='
+
+   35 Const: tok_const FieldType tok_identifier '=' . ConstValue CommaOrSemicolonOptional FieldComment
+
+    '['               shift, and goto state 130
+    '{'               shift, and goto state 131
+    tok_dub_constant  shift, and goto state 125
+    tok_identifier    shift, and goto state 127
+    tok_int_constant  shift, and goto state 124
+    tok_literal       shift, and goto state 126
+
+    ConstList   goto state 128
+    ConstMap    goto state 129
+    ConstValue  goto state 180
+
+state 180 // tok_const tok_binary tok_identifier '=' tok_dub_constant [$end]
+
+   35 Const: tok_const FieldType tok_identifier '=' ConstValue . CommaOrSemicolonOptional FieldComment
+   23 CommaOrSemicolonOptional: .  [$end, tok_const, tok_enum, tok_fieldcomment, tok_lobattr, tok_senum, tok_service, tok_struct, tok_typedef, tok_union, tok_xception]
+
+    $end              reduce using rule 23 (CommaOrSemicolonOptional)
+    ','               shift, and goto state 25
+    ';'               shift, and goto state 26
+    tok_const         reduce using rule 23 (CommaOrSemicolonOptional)
+    tok_enum          reduce using rule 23 (CommaOrSemicolonOptional)
+    tok_fieldcomment  reduce using rule 23 (CommaOrSemicolonOptional)
+    tok_lobattr       reduce using rule 23 (CommaOrSemicolonOptional)
+    tok_senum         reduce using rule 23 (CommaOrSemicolonOptional)
+    tok_service       reduce using rule 23 (CommaOrSemicolonOptional)
+    tok_struct        reduce using rule 23 (CommaOrSemicolonOptional)
+    tok_typedef       reduce using rule 23 (CommaOrSemicolonOptional)
+    tok_union         reduce using rule 23 (CommaOrSemicolonOptional)
+    tok_xception      reduce using rule 23 (CommaOrSemicolonOptional)
+
+    CommaOrSemicolonOptional  goto state 181
+
+state 181 // tok_const tok_binary tok_identifier '=' tok_dub_constant [$end]
+
+   35 Const: tok_const FieldType tok_identifier '=' ConstValue CommaOrSemicolonOptional . FieldComment
+  119 FieldComment: .  [$end, tok_const, tok_enum, tok_lobattr, tok_senum, tok_service, tok_struct, tok_typedef, tok_union, tok_xception]
+
+    $end              reduce using rule 119 (FieldComment)
+    tok_const         reduce using rule 119 (FieldComment)
+    tok_enum          reduce using rule 119 (FieldComment)
+    tok_fieldcomment  shift, and goto state 29
+    tok_lobattr       reduce using rule 119 (FieldComment)
+    tok_senum         reduce using rule 119 (FieldComment)
+    tok_service       reduce using rule 119 (FieldComment)
+    tok_struct        reduce using rule 119 (FieldComment)
+    tok_typedef       reduce using rule 119 (FieldComment)
+    tok_union         reduce using rule 119 (FieldComment)
+    tok_xception      reduce using rule 119 (FieldComment)
+
+    FieldComment  goto state 182
+
+state 182 // tok_const tok_binary tok_identifier '=' tok_dub_constant [$end]
+
+   35 Const: tok_const FieldType tok_identifier '=' ConstValue CommaOrSemicolonOptional FieldComment .  [$end, tok_const, tok_enum, tok_lobattr, tok_senum, tok_service, tok_struct, tok_typedef, tok_union, tok_xception]
+
+    $end          reduce using rule 35 (Const)
+    tok_const     reduce using rule 35 (Const)
+    tok_enum      reduce using rule 35 (Const)
+    tok_lobattr   reduce using rule 35 (Const)
+    tok_senum     reduce using rule 35 (Const)
+    tok_service   reduce using rule 35 (Const)
+    tok_struct    reduce using rule 35 (Const)
+    tok_typedef   reduce using rule 35 (Const)
+    tok_union     reduce using rule 35 (Const)
+    tok_xception  reduce using rule 35 (Const)
+
+state 183 // tok_senum tok_identifier
+
+   31 Senum: tok_senum tok_identifier . '{' SenumDefList '}' TypeAnnotations
+
+    '{'  shift, and goto state 184
+
+state 184 // tok_senum tok_identifier '{'
+
+   31 Senum: tok_senum tok_identifier '{' . SenumDefList '}' TypeAnnotations
+   33 SenumDefList: .  ['}', tok_literal]
+
+    '}'          reduce using rule 33 (SenumDefList)
+    tok_literal  reduce using rule 33 (SenumDefList)
+
+    SenumDefList  goto state 185
+
+state 185 // tok_senum tok_identifier '{' ['}']
+
+   31 Senum: tok_senum tok_identifier '{' SenumDefList . '}' TypeAnnotations
+   32 SenumDefList: SenumDefList . SenumDef
+
+    '}'          shift, and goto state 186
+    tok_literal  shift, and goto state 188
+
+    SenumDef  goto state 187
+
+state 186 // tok_senum tok_identifier '{' '}'
+
+   31 Senum: tok_senum tok_identifier '{' SenumDefList '}' . TypeAnnotations
+  109 TypeAnnotations: .  [$end, tok_const, tok_enum, tok_lobattr, tok_senum, tok_service, tok_struct, tok_typedef, tok_union, tok_xception]
+
+    $end          reduce using rule 109 (TypeAnnotations)
+    '('           shift, and goto state 17
+    tok_const     reduce using rule 109 (TypeAnnotations)
+    tok_enum      reduce using rule 109 (TypeAnnotations)
+    tok_lobattr   reduce using rule 109 (TypeAnnotations)
+    tok_senum     reduce using rule 109 (TypeAnnotations)
+    tok_service   reduce using rule 109 (TypeAnnotations)
+    tok_struct    reduce using rule 109 (TypeAnnotations)
+    tok_typedef   reduce using rule 109 (TypeAnnotations)
+    tok_union     reduce using rule 109 (TypeAnnotations)
+    tok_xception  reduce using rule 109 (TypeAnnotations)
+
+    TypeAnnotations  goto state 190
+
+state 187 // tok_senum tok_identifier '{' tok_literal ['}']
+
+   32 SenumDefList: SenumDefList SenumDef .  ['}', tok_literal]
+
+    '}'          reduce using rule 32 (SenumDefList)
+    tok_literal  reduce using rule 32 (SenumDefList)
+
+state 188 // tok_senum tok_identifier '{' tok_literal
+
+   34 SenumDef: tok_literal . CommaOrSemicolonOptional
+   23 CommaOrSemicolonOptional: .  ['}', tok_literal]
+
+    ','          shift, and goto state 25
+    ';'          shift, and goto state 26
+    '}'          reduce using rule 23 (CommaOrSemicolonOptional)
+    tok_literal  reduce using rule 23 (CommaOrSemicolonOptional)
+
+    CommaOrSemicolonOptional  goto state 189
+
+state 189 // tok_senum tok_identifier '{' tok_literal ['}']
+
+   34 SenumDef: tok_literal CommaOrSemicolonOptional .  ['}', tok_literal]
+
+    '}'          reduce using rule 34 (SenumDef)
+    tok_literal  reduce using rule 34 (SenumDef)
+
+state 190 // tok_senum tok_identifier '{' '}' [$end]
+
+   31 Senum: tok_senum tok_identifier '{' SenumDefList '}' TypeAnnotations .  [$end, tok_const, tok_enum, tok_lobattr, tok_senum, tok_service, tok_struct, tok_typedef, tok_union, tok_xception]
+
+    $end          reduce using rule 31 (Senum)
+    tok_const     reduce using rule 31 (Senum)
+    tok_enum      reduce using rule 31 (Senum)
+    tok_lobattr   reduce using rule 31 (Senum)
+    tok_senum     reduce using rule 31 (Senum)
+    tok_service   reduce using rule 31 (Senum)
+    tok_struct    reduce using rule 31 (Senum)
+    tok_typedef   reduce using rule 31 (Senum)
+    tok_union     reduce using rule 31 (Senum)
+    tok_xception  reduce using rule 31 (Senum)
+
+state 191 // tok_enum tok_identifier
+
+   25 Enum: tok_enum tok_identifier . '{' EnumDefList '}' TypeAnnotations
+
+    '{'  shift, and goto state 192
+
+state 192 // tok_enum tok_identifier '{'
+
+   25 Enum: tok_enum tok_identifier '{' . EnumDefList '}' TypeAnnotations
+   27 EnumDefList: .  ['}', tok_identifier]
+
+    '}'             reduce using rule 27 (EnumDefList)
+    tok_identifier  reduce using rule 27 (EnumDefList)
+
+    EnumDefList  goto state 193
+
+state 193 // tok_enum tok_identifier '{' ['}']
+
+   25 Enum: tok_enum tok_identifier '{' EnumDefList . '}' TypeAnnotations
+   26 EnumDefList: EnumDefList . EnumDef
+    2 CaptureDocText: .  [tok_identifier]
+
+    '}'             shift, and goto state 194
+    tok_identifier  reduce using rule 2 (CaptureDocText)
+
+    CaptureDocText  goto state 196
+    EnumDef         goto state 195
+
+state 194 // tok_enum tok_identifier '{' '}'
+
+   25 Enum: tok_enum tok_identifier '{' EnumDefList '}' . TypeAnnotations
+  109 TypeAnnotations: .  [$end, tok_const, tok_enum, tok_lobattr, tok_senum, tok_service, tok_struct, tok_typedef, tok_union, tok_xception]
+
+    $end          reduce using rule 109 (TypeAnnotations)
+    '('           shift, and goto state 17
+    tok_const     reduce using rule 109 (TypeAnnotations)
+    tok_enum      reduce using rule 109 (TypeAnnotations)
+    tok_lobattr   reduce using rule 109 (TypeAnnotations)
+    tok_senum     reduce using rule 109 (TypeAnnotations)
+    tok_service   reduce using rule 109 (TypeAnnotations)
+    tok_struct    reduce using rule 109 (TypeAnnotations)
+    tok_typedef   reduce using rule 109 (TypeAnnotations)
+    tok_union     reduce using rule 109 (TypeAnnotations)
+    tok_xception  reduce using rule 109 (TypeAnnotations)
+
+    TypeAnnotations  goto state 204
+
+state 195 // tok_enum tok_identifier '{' tok_identifier ['}']
+
+   26 EnumDefList: EnumDefList EnumDef .  ['}', tok_identifier]
+
+    '}'             reduce using rule 26 (EnumDefList)
+    tok_identifier  reduce using rule 26 (EnumDefList)
+
+state 196 // tok_enum tok_identifier '{' [tok_identifier]
+
+   28 EnumDef: CaptureDocText . EnumValue TypeAnnotations CommaOrSemicolonOptional FieldComment
+
+    tok_identifier  shift, and goto state 198
+
+    EnumValue  goto state 197
+
+state 197 // tok_enum tok_identifier '{' tok_identifier ['(']
+
+   28 EnumDef: CaptureDocText EnumValue . TypeAnnotations CommaOrSemicolonOptional FieldComment
+  109 TypeAnnotations: .  [',', ';', '}', tok_fieldcomment, tok_identifier]
+
+    '('               shift, and goto state 17
+    ','               reduce using rule 109 (TypeAnnotations)
+    ';'               reduce using rule 109 (TypeAnnotations)
+    '}'               reduce using rule 109 (TypeAnnotations)
+    tok_fieldcomment  reduce using rule 109 (TypeAnnotations)
+    tok_identifier    reduce using rule 109 (TypeAnnotations)
+
+    TypeAnnotations  goto state 201
+
+state 198 // tok_enum tok_identifier '{' tok_identifier
+
+   29 EnumValue: tok_identifier . '=' tok_int_constant
+   30 EnumValue: tok_identifier .  ['(', ',', ';', '}', tok_fieldcomment, tok_identifier]
+
+    '('               reduce using rule 30 (EnumValue)
+    ','               reduce using rule 30 (EnumValue)
+    ';'               reduce using rule 30 (EnumValue)
+    '='               shift, and goto state 199
+    '}'               reduce using rule 30 (EnumValue)
+    tok_fieldcomment  reduce using rule 30 (EnumValue)
+    tok_identifier    reduce using rule 30 (EnumValue)
+
+state 199 // tok_enum tok_identifier '{' tok_identifier '='
+
+   29 EnumValue: tok_identifier '=' . tok_int_constant
+
+    tok_int_constant  shift, and goto state 200
+
+state 200 // tok_enum tok_identifier '{' tok_identifier '=' tok_int_constant
+
+   29 EnumValue: tok_identifier '=' tok_int_constant .  ['(', ',', ';', '}', tok_fieldcomment, tok_identifier]
+
+    '('               reduce using rule 29 (EnumValue)
+    ','               reduce using rule 29 (EnumValue)
+    ';'               reduce using rule 29 (EnumValue)
+    '}'               reduce using rule 29 (EnumValue)
+    tok_fieldcomment  reduce using rule 29 (EnumValue)
+    tok_identifier    reduce using rule 29 (EnumValue)
+
+state 201 // tok_enum tok_identifier '{' tok_identifier [',']
+
+   28 EnumDef: CaptureDocText EnumValue TypeAnnotations . CommaOrSemicolonOptional FieldComment
+   23 CommaOrSemicolonOptional: .  ['}', tok_fieldcomment, tok_identifier]
+
+    ','               shift, and goto state 25
+    ';'               shift, and goto state 26
+    '}'               reduce using rule 23 (CommaOrSemicolonOptional)
+    tok_fieldcomment  reduce using rule 23 (CommaOrSemicolonOptional)
+    tok_identifier    reduce using rule 23 (CommaOrSemicolonOptional)
+
+    CommaOrSemicolonOptional  goto state 202
+
+state 202 // tok_enum tok_identifier '{' tok_identifier ['}']
+
+   28 EnumDef: CaptureDocText EnumValue TypeAnnotations CommaOrSemicolonOptional . FieldComment
+  119 FieldComment: .  ['}', tok_identifier]
+
+    '}'               reduce using rule 119 (FieldComment)
+    tok_fieldcomment  shift, and goto state 29
+    tok_identifier    reduce using rule 119 (FieldComment)
+
+    FieldComment  goto state 203
+
+state 203 // tok_enum tok_identifier '{' tok_identifier ['}']
+
+   28 EnumDef: CaptureDocText EnumValue TypeAnnotations CommaOrSemicolonOptional FieldComment .  ['}', tok_identifier]
+
+    '}'             reduce using rule 28 (EnumDef)
+    tok_identifier  reduce using rule 28 (EnumDef)
+
+state 204 // tok_enum tok_identifier '{' '}' [$end]
+
+   25 Enum: tok_enum tok_identifier '{' EnumDefList '}' TypeAnnotations .  [$end, tok_const, tok_enum, tok_lobattr, tok_senum, tok_service, tok_struct, tok_typedef, tok_union, tok_xception]
+
+    $end          reduce using rule 25 (Enum)
+    tok_const     reduce using rule 25 (Enum)
+    tok_enum      reduce using rule 25 (Enum)
+    tok_lobattr   reduce using rule 25 (Enum)
+    tok_senum     reduce using rule 25 (Enum)
+    tok_service   reduce using rule 25 (Enum)
+    tok_struct    reduce using rule 25 (Enum)
+    tok_typedef   reduce using rule 25 (Enum)
+    tok_union     reduce using rule 25 (Enum)
+    tok_xception  reduce using rule 25 (Enum)
+
+state 205 // tok_typedef tok_binary [tok_identifier]
+
+   24 Typedef: tok_typedef FieldType . tok_identifier TypeAnnotations CommaOrSemicolonOptional
+
+    tok_identifier  shift, and goto state 206
+
+state 206 // tok_typedef tok_binary tok_identifier
+
+   24 Typedef: tok_typedef FieldType tok_identifier . TypeAnnotations CommaOrSemicolonOptional
+  109 TypeAnnotations: .  [$end, ',', ';', tok_const, tok_enum, tok_lobattr, tok_senum, tok_service, tok_struct, tok_typedef, tok_union, tok_xception]
+
+    $end          reduce using rule 109 (TypeAnnotations)
+    '('           shift, and goto state 17
+    ','           reduce using rule 109 (TypeAnnotations)
+    ';'           reduce using rule 109 (TypeAnnotations)
+    tok_const     reduce using rule 109 (TypeAnnotations)
+    tok_enum      reduce using rule 109 (TypeAnnotations)
+    tok_lobattr   reduce using rule 109 (TypeAnnotations)
+    tok_senum     reduce using rule 109 (TypeAnnotations)
+    tok_service   reduce using rule 109 (TypeAnnotations)
+    tok_struct    reduce using rule 109 (TypeAnnotations)
+    tok_typedef   reduce using rule 109 (TypeAnnotations)
+    tok_union     reduce using rule 109 (TypeAnnotations)
+    tok_xception  reduce using rule 109 (TypeAnnotations)
+
+    TypeAnnotations  goto state 207
+
+state 207 // tok_typedef tok_binary tok_identifier [$end]
+
+   24 Typedef: tok_typedef FieldType tok_identifier TypeAnnotations . CommaOrSemicolonOptional
+   23 CommaOrSemicolonOptional: .  [$end, tok_const, tok_enum, tok_lobattr, tok_senum, tok_service, tok_struct, tok_typedef, tok_union, tok_xception]
+
+    $end          reduce using rule 23 (CommaOrSemicolonOptional)
+    ','           shift, and goto state 25
+    ';'           shift, and goto state 26
+    tok_const     reduce using rule 23 (CommaOrSemicolonOptional)
+    tok_enum      reduce using rule 23 (CommaOrSemicolonOptional)
+    tok_lobattr   reduce using rule 23 (CommaOrSemicolonOptional)
+    tok_senum     reduce using rule 23 (CommaOrSemicolonOptional)
+    tok_service   reduce using rule 23 (CommaOrSemicolonOptional)
+    tok_struct    reduce using rule 23 (CommaOrSemicolonOptional)
+    tok_typedef   reduce using rule 23 (CommaOrSemicolonOptional)
+    tok_union     reduce using rule 23 (CommaOrSemicolonOptional)
+    tok_xception  reduce using rule 23 (CommaOrSemicolonOptional)
+
+    CommaOrSemicolonOptional  goto state 208
+
+state 208 // tok_typedef tok_binary tok_identifier [$end]
+
+   24 Typedef: tok_typedef FieldType tok_identifier TypeAnnotations CommaOrSemicolonOptional .  [$end, tok_const, tok_enum, tok_lobattr, tok_senum, tok_service, tok_struct, tok_typedef, tok_union, tok_xception]
+
+    $end          reduce using rule 24 (Typedef)
+    tok_const     reduce using rule 24 (Typedef)
+    tok_enum      reduce using rule 24 (Typedef)
+    tok_lobattr   reduce using rule 24 (Typedef)
+    tok_senum     reduce using rule 24 (Typedef)
+    tok_service   reduce using rule 24 (Typedef)
+    tok_struct    reduce using rule 24 (Typedef)
+    tok_typedef   reduce using rule 24 (Typedef)
+    tok_union     reduce using rule 24 (Typedef)
+    tok_xception  reduce using rule 24 (Typedef)
+
